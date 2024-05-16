@@ -150,7 +150,7 @@ namespace BloodyRewards.Systems
 
         private static void rewardForNPC(UserModel userModelKiller, int diedLevel)
         {
-            var rewards = ShareDB.getRewardList().ToList(); ;
+            var rewards = ShareDB.getRewardList().Where(x => x.onlyVBlood == false).ToList(); ;
             var random = new Random();
             int indexRewards = random.Next(rewards.Count);
 
@@ -191,7 +191,7 @@ namespace BloodyRewards.Systems
 
         private static void rewardForVBlood(UserModel userModelKiller, int diedLevel)
         {
-            var rewards = ShareDB.getRewardList().ToList();
+            var rewards = ShareDB.getRewardList().Where(x => x.onlyVBlood == true ).ToList();
             var random = new Random();
             int indexRewards = random.Next(rewards.Count);
 
