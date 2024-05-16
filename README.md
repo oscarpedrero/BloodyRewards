@@ -104,25 +104,25 @@ MaxRewardsPerDayPerPlayerPvp = 20
 |SECTION|PARAM| DESCRIPTION                                                     | DEFAULT
 |----------------|-------------------------------|-----------------------------------------------------------------|-----------------------------|
 |RewardsSystem|`enabled `            | Define if the system enabled or disabled | true
-|RewardsSystem|`minPercentageDropNpc`            | Percent chance that an NPC will drop the type of currency from the shop | 5
+|RewardsSystem|`minPercentageDropNpc`            | Percent chance that an NPC will drop the type of reward from the shop | 5
 |RewardsSystem|`IncrementPercentageDropEveryTenLevelsNpc`            |  Percentage increase for every rank of 10 levels of the NPC| 5
-|RewardsSystem|`DropdNpcRewardsMin`            |  Minimum currency an NPC can drop| 5
-|RewardsSystem|`DropNpcRewardsMax`            |  Maximum currency an NPC can drop| 5
-|RewardsSystem|`MaxRewardsPerDayPerPlayerNpc`            |  Maximum number of currency that a user can get per day by NPC death| 5
-|RewardsSystem|`minPercentageDropVBlood`            |  Percent chance that an VBlood will drop the type of currency from the shop| 20
+|RewardsSystem|`DropdNpcRewardsMin`            |  Minimum reward an NPC can drop| 5
+|RewardsSystem|`DropNpcRewardsMax`            |  Maximum reward an NPC can drop| 5
+|RewardsSystem|`MaxRewardsPerDayPerPlayerNpc`            |  Maximum number of reward that a user can get per day by NPC death| 5
+|RewardsSystem|`minPercentageDropVBlood`            |  Percent chance that an VBlood will drop the type of reward from the shop| 20
 |RewardsSystem|`IncrementPercentageDropEveryTenLevelsVBlood`            |  Percentage increase for every rank of 10 levels of the VBlood| 1
-|RewardsSystem|`DropVBloodRewardsMin`            |  Minimum currency an VBlood can drop| 10
-|RewardsSystem|`DropVBloodRewardsMax`            |  Maximum currency an VBlood can drop| 20
-|RewardsSystem|`MaxRewardsPerDayPerPlayerVBlood`            |  Maximum number of currency that a user can get per day by VBlood death| 20
-|RewardsSystem|`minPercentageDropPvp`            |  Percent chance that victory in a PVP duel will drop the type of currency in the store| 100
+|RewardsSystem|`DropVBloodRewardsMin`            |  Minimum reward an VBlood can drop| 10
+|RewardsSystem|`DropVBloodRewardsMax`            |  Maximum reward an VBlood can drop| 20
+|RewardsSystem|`MaxRewardsPerDayPerPlayerVBlood`            |  Maximum number of reward that a user can get per day by VBlood death| 20
+|RewardsSystem|`minPercentageDropPvp`            |  Percent chance that victory in a PVP duel will drop the type of reward in the store| 100
 |RewardsSystem|`IncrementPercentageDropEveryTenLevelsPvp`            |  Percentage increase for every rank of 10 levels of the Player killed in pvp duel| 5
-|RewardsSystem|`DropPvpRewardsMin`            |  Minimum currency can drop victory in PVP| 15
-|RewardsSystem|`DropPvpRewardsMax`            |  Maximum currency can drop victory in PVP| 20
-|RewardsSystem|`MaxRewardsPerDayPerPlayerPvp`            |  Maximum number of currency that a user can get per day by victory in PVP| 20
+|RewardsSystem|`DropPvpRewardsMin`            |  Minimum reward can drop victory in PVP| 15
+|RewardsSystem|`DropPvpRewardsMax`            |  Maximum reward can drop victory in PVP| 20
+|RewardsSystem|`MaxRewardsPerDayPerPlayerPvp`            |  Maximum number of reward that a user can get per day by victory in PVP| 20
 
 ## Rewards System
 
-This system can be activated or not depending on whether the material we want to use as currency drops very frequently or not.
+This system can be activated or not depending on whether the material we want to use as reward drops very frequently or not.
 
 The system works in such a way that we will define a percentage of opportunity for the rewards to drop each time the following events occur:
 
@@ -147,7 +147,7 @@ Let's take an example of an NPC drop system:
 - To make this type of configuration we would have to put the following parameters in the server file:
 
 ```
-## Percent chance that an NPC will drop the type of currency from the shop
+## Percent chance that an NPC will drop the type of reward from the shop
 # Setting type: Int32
 #Default value: 5
 minPercentageDropNpc = 10
@@ -157,17 +157,17 @@ minPercentageDropNpc = 10
 #Default value: 5
 IncrementPercentageDropEveryTenLevelsNpc = 2
 
-## Minimum currency an NPC can drop
+## Minimum reward an NPC can drop
 # Setting type: Int32
 #Default value: 1
 DropdNpcRewardsMin = 1
 
-## Maximum currency an NPC can drop
+## Maximum reward an NPC can drop
 # Setting type: Int32
 #Default value: 5
 DropNpcRewardsMax = 5
 
-## Maximum number of currency that a user can get per day by NPC death
+## Maximum number of reward that a user can get per day by NPC death
 # Setting type: Int32
 #Default value: 5
 MaxRewardsPerDayPerPlayerNpc = 40
@@ -189,7 +189,7 @@ There are currently four commands for admins:
 
 | COMMAND                                          |DESCRIPTION
 |--------------------------------------------------|-------------------------------|
-| `.brw add "<NameOfCurrency" <PrefabGUID> <OnlyForVBlood (true/false)>`   | Command to add an reward. To get the PrefabGUID you must visit [Complete list of prefabs](https://discord.com/channels/978094827830915092/1117273637024714862/1117273642817044571) and get the PrefabGUID Value as shown in the image below. The last parameter is used to indicate to the drop system if you want to activate this currency so that it drops when killing an NPC Example: .shop currency add "Silver Coin" -949672483 true 
+| `.brw add "<NameOfReward" <PrefabGUID> <OnlyForVBlood (true/false)>`   | Command to add an reward. To get the PrefabGUID you must visit [Complete list of prefabs](https://discord.com/channels/978094827830915092/1117273637024714862/1117273642817044571) and get the PrefabGUID Value as shown in the image below. The last parameter is used to indicate to the drop system if you want to activate this reward so that it drops when killing an NPC Example: .shop reward add "Silver Coin" -949672483 true 
 | `.brw list` | Command to get the list of rewards.
 | `.brw remove <NumberItem>` | Command to remove an reward.
 
