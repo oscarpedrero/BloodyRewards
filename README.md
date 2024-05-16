@@ -189,9 +189,9 @@ There are currently four commands for admins:
 
 | COMMAND                                          |DESCRIPTION
 |--------------------------------------------------|-------------------------------|
-| `.shop currency add "<NameOfCurrency" <PrefabGUID> <OnlyForVBlood (true/false)>`   | Command to add an reward. To get the PrefabGUID you must visit [Complete list of prefabs](https://discord.com/channels/978094827830915092/1117273637024714862/1117273642817044571) and get the PrefabGUID Value as shown in the image below. The last parameter is used to indicate to the drop system if you want to activate this currency so that it drops when killing an NPC Example: .shop currency add "Silver Coin" -949672483 true 
-| `.shop currency list` | Command to get the list of rewards.
-| `.shop currency remove <NumberItem>` | Command to remove an reward.
+| `.brw add "<NameOfCurrency" <PrefabGUID> <OnlyForVBlood (true/false)>`   | Command to add an reward. To get the PrefabGUID you must visit [Complete list of prefabs](https://discord.com/channels/978094827830915092/1117273637024714862/1117273642817044571) and get the PrefabGUID Value as shown in the image below. The last parameter is used to indicate to the drop system if you want to activate this currency so that it drops when killing an NPC Example: .shop currency add "Silver Coin" -949672483 true 
+| `.brw list` | Command to get the list of rewards.
+| `.brw remove <NumberItem>` | Command to remove an reward.
 
 # Credits
 
