@@ -25,7 +25,7 @@ For this we will go to the folder that we have defined within BepInEx for the co
 # Default value: true
 enabled = true
 
-## Percent chance that an NPC will drop the type of reward from the shop
+## Percent chance that an NPC will drop the type of reward from the system
 # Setting type: Int32
 # Default value: 5
 minPercentageDropNpc = 80
@@ -50,7 +50,7 @@ DropNpcRewardsMax = 5
 # Default value: 5
 MaxRewardsPerDayPerPlayerNpc = 5
 
-## Percent chance that an VBlood will drop the type of reward from the shop
+## Percent chance that an VBlood will drop the type of reward from the system
 # Setting type: Int32
 # Default value: 20
 minPercentageDropVBlood = 20
@@ -104,12 +104,12 @@ MaxRewardsPerDayPerPlayerPvp = 20
 |SECTION|PARAM| DESCRIPTION                                                     | DEFAULT
 |----------------|-------------------------------|-----------------------------------------------------------------|-----------------------------|
 |RewardsSystem|`enabled `            | Define if the system enabled or disabled | true
-|RewardsSystem|`minPercentageDropNpc`            | Percent chance that an NPC will drop the type of reward from the shop | 5
+|RewardsSystem|`minPercentageDropNpc`            | Percent chance that an NPC will drop the type of reward | 5
 |RewardsSystem|`IncrementPercentageDropEveryTenLevelsNpc`            |  Percentage increase for every rank of 10 levels of the NPC| 5
 |RewardsSystem|`DropdNpcRewardsMin`            |  Minimum reward an NPC can drop| 5
 |RewardsSystem|`DropNpcRewardsMax`            |  Maximum reward an NPC can drop| 5
 |RewardsSystem|`MaxRewardsPerDayPerPlayerNpc`            |  Maximum number of reward that a user can get per day by NPC death| 5
-|RewardsSystem|`minPercentageDropVBlood`            |  Percent chance that an VBlood will drop the type of reward from the shop| 20
+|RewardsSystem|`minPercentageDropVBlood`            |  Percent chance that an VBlood will drop the type of reward| 20
 |RewardsSystem|`IncrementPercentageDropEveryTenLevelsVBlood`            |  Percentage increase for every rank of 10 levels of the VBlood| 1
 |RewardsSystem|`DropVBloodRewardsMin`            |  Minimum reward an VBlood can drop| 10
 |RewardsSystem|`DropVBloodRewardsMax`            |  Maximum reward an VBlood can drop| 20
@@ -147,7 +147,7 @@ Let's take an example of an NPC drop system:
 - To make this type of configuration we would have to put the following parameters in the server file:
 
 ```
-## Percent chance that an NPC will drop the type of reward from the shop
+## Percent chance that an NPC will drop the type of reward from the system
 # Setting type: Int32
 #Default value: 5
 minPercentageDropNpc = 10
@@ -189,7 +189,7 @@ There are currently four commands for admins:
 
 | COMMAND                                          |DESCRIPTION
 |--------------------------------------------------|-------------------------------|
-| `.brw add "<NameOfReward" <PrefabGUID> <OnlyForVBlood (true/false)>`   | Command to add an reward. To get the PrefabGUID you must visit [Complete list of prefabs](https://discord.com/channels/978094827830915092/1117273637024714862/1117273642817044571) and get the PrefabGUID Value as shown in the image below. The last parameter is used to indicate to the drop system if you want to activate this reward so that it drops when killing an NPC Example: .shop reward add "Silver Coin" -949672483 true 
+| `.brw add "<NameOfReward" <PrefabGUID> <OnlyForVBlood (true/false)>`   | Command to add an reward. To get the PrefabGUID you must visit [Complete list of prefabs](https://discord.com/channels/978094827830915092/1117273637024714862/1117273642817044571) and get the PrefabGUID Value as shown in the image below. The last parameter is used to indicate to the drop system if you want to activate this reward so that it drops when killing an NPC Example: .brw add "Silver Coin" -949672483 true 
 | `.brw list` | Command to get the list of rewards.
 | `.brw remove <NumberItem>` | Command to remove an reward.
 

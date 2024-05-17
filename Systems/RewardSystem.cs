@@ -150,7 +150,7 @@ namespace BloodyRewards.Systems
 
         private static void rewardForNPC(UserModel userModelKiller, int diedLevel)
         {
-            var rewards = ShareDB.getRewardList().Where(x => x.onlyVBlood == false).ToList(); ;
+            var rewards = ShareDB.getRewardList().Where(x => x.onlyVBlood == false).ToList();
             var random = new Random();
             int indexRewards = random.Next(rewards.Count);
 
@@ -239,11 +239,10 @@ namespace BloodyRewards.Systems
 
         private static bool probabilityOeneratingReward(int percentage)
         {
-            var number = rnd.Next(1, 100);
+            var number = new Random().Next(1, 100);
 
-            if(number <= percentage)
+            if (number <= (percentage * 1))
             {
-                //Plugin.Logger.LogInfo($"Drop {number} <= {percentage}");
                 return true;
             }
 

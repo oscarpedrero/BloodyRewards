@@ -37,11 +37,11 @@ namespace BloodyRewards.Command
 
             SaveDataToFiles.saveRewardsList();
 
-            ctx.Reply(FontColorChatSystem.Yellow($"Added reward {FontColorChatSystem.White($"{name}")} to the store"));
+            ctx.Reply(FontColorChatSystem.Yellow($"Added reward {FontColorChatSystem.White($"{name}")} to the system"));
 
         }
 
-        [Command("list", usage: "", description: "List of rewards available to buy in the store", adminOnly: true)]
+        [Command("list", usage: "", description: "List of rewards available", adminOnly: true)]
         public static void ListReward(ChatCommandContext ctx)
         {
 
@@ -72,7 +72,7 @@ namespace BloodyRewards.Command
             {
                 if (ShareDB.rewardsList.Count == 1)
                 {
-                    throw ctx.Error(FontColorChatSystem.Yellow($"Do not remove all reward from the store."));
+                    throw ctx.Error(FontColorChatSystem.Yellow($"Do not remove all reward."));
                 }
                 if (!ShareDB.SearchRewardByCommand(index, out RewardModel currecyModel))
                 {
