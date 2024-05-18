@@ -5,10 +5,7 @@ using Bloodstone.API;
 using Bloody.Core;
 using Bloody.Core.API;
 using BloodyRewards.DB;
-using BloodyRewards.Systems;
 using HarmonyLib;
-using Steamworks;
-using System;
 using Unity.Entities;
 using VampireCommandFramework;
 
@@ -17,11 +14,8 @@ namespace BloodyRewards;
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 [BepInDependency("gg.deca.VampireCommandFramework")]
 [BepInDependency("gg.deca.Bloodstone")]
-[Bloodstone.API.Reloadable]
 public class Plugin : BasePlugin, IRunOnInitialized
 {
-
-    internal static Plugin Instance { get; private set; }
 
     Harmony _harmony;
 
@@ -67,8 +61,8 @@ public class Plugin : BasePlugin, IRunOnInitialized
 
         EventsHandlerSystem.OnInitialize += GameDataOnInitialize;
         InitConfigServer();
-        EventsHandlerSystem.OnDeath += RewardSystem.ServerEvents_OnDeath;
-        EventsHandlerSystem.OnVampireDowned += RewardSystem.ServerEvents_OnVampireDowned;
+        //EventsHandlerSystem.OnDeath += RewardSystem.ServerEvents_OnDeath;
+        //EventsHandlerSystem.OnVampireDowned += RewardSystem.ServerEvents_OnVampireDowned;
 
         LoadDataFromFiles.CreateFilesConfig();
 
@@ -122,22 +116,4 @@ public class Plugin : BasePlugin, IRunOnInitialized
         LoadDataFromFiles.SetConfigMod();
     }
 
-    // // Uncomment for example commmand or delete
-
-    // /// <summary> 
-    // /// Example VCF command that demonstrated default values and primitive types
-    // /// Visit https://github.com/decaprime/VampireCommandFramework for more info 
-    // /// </summary>
-    // /// <remarks>
-    // /// How you could call this command from chat:
-    // ///
-    // /// .bloodyrewards-example "some quoted string" 1 1.5
-    // /// .bloodyrewards-example boop 21232
-    // /// .bloodyrewards-example boop-boop
-    // ///</remarks>
-    // [Command("bloodyrewards-example", description: "Example command from bloodyrewards", adminOnly: true)]
-    // public void ExampleCommand(ICommandContext ctx, string someString, int num = 5, float num2 = 1.5f)
-    // { 
-    //     ctx.Reply($"You passed in {someString} and {num} and {num2}");
-    // }
 }

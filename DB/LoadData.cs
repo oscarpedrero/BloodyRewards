@@ -62,7 +62,7 @@ namespace BloodyRewards.DB
 
         public static void LoadRewardsToDB()
         {
-            if (!LoadDataFromFiles.loadRewards())
+            if (!loadRewards())
             {
                 Plugin.Logger.LogError($"Error loading RewardsList");
             }
@@ -70,7 +70,7 @@ namespace BloodyRewards.DB
 
         public static void LoadUserRewardsPerDayToDB()
         {
-            if (!LoadDataFromFiles.loadUserRewardsPerDay())
+            if (!loadUserRewardsPerDay())
             {
                 Plugin.Logger.LogError($"Error loading loadUserRewardsPerDay");
             }
