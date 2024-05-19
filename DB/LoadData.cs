@@ -98,6 +98,15 @@ namespace BloodyRewards.DB
             ConfigDB.DropPvpRewardsMin = Plugin.DropPvpRewardsMin.Value;
             ConfigDB.DropPvpRewardsMax = Plugin.DropPvpRewardsMax.Value;
             ConfigDB.MaxRewardsPerDayPerPlayerPvp = Plugin.MaxRewardsPerDayPerPlayerPvp.Value;
+
+            ConfigDB.WalletSystem = Plugin.WalletSystem.Value;
+            ConfigDB.WalletPassword = Plugin.WalletPassword.Value;
+            ConfigDB.WalletAmountPveMax = Plugin.WalletAmountPveMax.Value;
+            ConfigDB.WalletAmountPveMin = Plugin.WalletAmountPveMin.Value;
+            ConfigDB.WalletAmountVBloodMax = Plugin.WalletAmountVBloodMax.Value;
+            ConfigDB.WalletAmountVBloodMin = Plugin.WalletAmountVBloodMin.Value;
+            ConfigDB.WalletAmountPVPMax = Plugin.WalletAmountVBloodMin.Value;
+            ConfigDB.WalletAmountPVPMin = Plugin.WalletAmountVBloodMin.Value;
         }
     }
 }

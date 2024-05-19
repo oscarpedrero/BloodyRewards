@@ -23,6 +23,14 @@ namespace BloodyRewards.DB
         public static int DropPvpRewardsMax { get; set; } = 0;
         public static int MaxRewardsPerDayPerPlayerPvp { get; set; } = 0;
         public static List<UserRewardsPerDayModel> UsersRewardsPerDay { get; set; } = new List<UserRewardsPerDayModel>();
+        public static bool WalletSystem { get; internal set; }
+        public static int WalletAmountPveMax { get; internal set; }
+        public static int WalletAmountPveMin { get; internal set; }
+        public static int WalletAmountPVPMin { get; internal set; }
+        public static int WalletAmountPVPMax { get; internal set; }
+        public static int WalletAmountVBloodMin { get; internal set; }
+        public static int WalletAmountVBloodMax { get; internal set; }
+        public static string WalletPassword { get; internal set; }
 
         public static List<(string name, DateTime date, UserRewardsPerDayModel model)> _normalizedUsersRewardsPerDay = new();
 

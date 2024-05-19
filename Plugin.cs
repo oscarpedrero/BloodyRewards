@@ -5,6 +5,7 @@ using Bloodstone.API;
 using Bloody.Core;
 using Bloody.Core.API;
 using BloodyRewards.DB;
+using BloodyRewards.Systems;
 using HarmonyLib;
 using Unity.Entities;
 using VampireCommandFramework;
@@ -14,6 +15,7 @@ namespace BloodyRewards;
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 [BepInDependency("gg.deca.VampireCommandFramework")]
 [BepInDependency("gg.deca.Bloodstone")]
+[BepInDependency("trodi.bloody.Wallet", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BasePlugin, IRunOnInitialized
 {
 
@@ -48,6 +50,16 @@ public class Plugin : BasePlugin, IRunOnInitialized
     public static ConfigEntry<int> DropPvpRewardsMax;
     public static ConfigEntry<int> MaxRewardsPerDayPerPlayerPvp;
 
+    // WALLET CONFIG
+    public static ConfigEntry<bool> WalletSystem;
+    public static ConfigEntry<string> WalletPassword;
+    public static ConfigEntry<int> WalletAmountPveMax;
+    public static ConfigEntry<int> WalletAmountPveMin;
+    public static ConfigEntry<int> WalletAmountVBloodMax;
+    public static ConfigEntry<int> WalletAmountVBloodMin;
+    public static ConfigEntry<int> WalletAmountPVPMax;
+    public static ConfigEntry<int> WalletAmountPVPMin;
+
     public override void Load()
     {
         Logger = new(Log);
@@ -61,8 +73,6 @@ public class Plugin : BasePlugin, IRunOnInitialized
 
         EventsHandlerSystem.OnInitialize += GameDataOnInitialize;
         InitConfigServer();
-        //EventsHandlerSystem.OnDeath += RewardSystem.ServerEvents_OnDeath;
-        //EventsHandlerSystem.OnVampireDowned += RewardSystem.ServerEvents_OnVampireDowned;
 
         LoadDataFromFiles.CreateFilesConfig();
 
@@ -72,6 +82,9 @@ public class Plugin : BasePlugin, IRunOnInitialized
     private void GameDataOnInitialize(World world)
     {
         SystemsCore = Core.SystemsCore;
+
+        EventsHandlerSystem.OnDeath += RewardSystem.ServerEvents_OnDeath;
+        EventsHandlerSystem.OnVampireDowned += RewardSystem.ServerEvents_OnVampireDowned;
 
         LoadDataFromFiles.LoadRewardsToDB();
         LoadDataFromFiles.LoadUserRewardsPerDayToDB();
@@ -109,6 +122,17 @@ public class Plugin : BasePlugin, IRunOnInitialized
         DropPvpRewardsMin = Config.Bind("RewardsSystem", "DropPvpRewardsMin", 15, "Minimum reward can drop victory in PVP");
         DropPvpRewardsMax = Config.Bind("RewardsSystem", "DropPvpRewardsMax", 20, "Maximum reward can drop victory in PVP");
         MaxRewardsPerDayPerPlayerPvp = Config.Bind("RewardsSystem", "MaxRewardsPerDayPerPlayerPvp", 20, "Maximum number of reward that a user can get per day by victory in PVP");
+
+        // Wallet CONFIG
+        WalletSystem = Config.Bind("Wallet", "enabled", false, "Activate rewards in virtual currency through BloodyWallet ( https://github.com/oscarpedrero/BloodyWallet )");
+        WalletPassword = Config.Bind("Wallet", "password", "", "BloodyWallet Password (Must match the BloodyWallet configuration password)");
+        WalletAmountPveMax = Config.Bind("Wallet", "amountPveMax", 2, "Maximum amount of virtual coins for when you drop in PVE");
+        WalletAmountPveMin = Config.Bind("Wallet", "amountPveMin", 1, "Minumun amount of virtual coins for when you drop in PVE");
+        WalletAmountVBloodMax = Config.Bind("Wallet", "amountVBloodMax", 2, "Maximum amount of virtual coins for when you drop in VBlood");
+        WalletAmountVBloodMin = Config.Bind("Wallet", "amountVBloodMin", 1, "Minimun amount of virtual coins for when you drop in PVE");
+        WalletAmountPVPMax = Config.Bind("Wallet", "amountPVPMax", 2, "Maximum amount of virtual coins for when you drop in PVE");
+        WalletAmountPVPMin = Config.Bind("Wallet", "amountPVPMin", 1, "Minimun amount of virtual coins for when you drop in PVE");
+
     }
 
     public void OnGameInitialized()

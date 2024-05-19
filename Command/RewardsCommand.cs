@@ -3,10 +3,8 @@ using BloodyRewards.DB;
 using Stunlock.Core;
 using System;
 using System.Collections.Generic;
-using Bloody.Core;
 using Bloody.Core.API;
 using VampireCommandFramework;
-using Unity.Entities;
 
 namespace BloodyRewards.Command
 {
@@ -19,16 +17,11 @@ namespace BloodyRewards.Command
         [Command("add", usage: "\"<Name>\" <PrefabGuid> <OnlyForVBlood true/false>", description: "Add a reward. To know the PrefabGuid of an item you must look for the item in the following URL <#4acc45><u>https://gaming.tools/v-rising/items</u></color>", adminOnly: true)]
         public static void AddReward(ChatCommandContext ctx, string name, int item, bool onlyVBlood)
         {
-
-            var prefabGUID = new PrefabGUID(item);
-            //Entity entity = Plugin.SystemsCore.PrefabCollectionSystem.PrefabLookupMap[prefabGUID];
-            //var itemModel = Core.Items.FromEntity(entity);
-            //var itemModel = Core.Items.GetPrefabById(prefabGUID);
-
-            /*if (itemModel == null)
+            if (Plugin.WalletSystem.Value)
             {
-                throw ctx.Error("Invalid item type");
-            }*/
+                throw ctx.Error("BloodyWallet is activated as a reward so this command is disabled.");
+            }
+            var prefabGUID = new PrefabGUID(item);
 
             if (!ShareDB.addRewardList(name, item, onlyVBlood))
             {
@@ -44,6 +37,10 @@ namespace BloodyRewards.Command
         [Command("list", usage: "", description: "List of rewards available", adminOnly: true)]
         public static void ListReward(ChatCommandContext ctx)
         {
+            if (Plugin.WalletSystem.Value)
+            {
+                throw ctx.Error("BloodyWallet is activated as a reward so this command is disabled.");
+            }
 
             if (!ConfigDB.RewardsEnabled)
             {
@@ -67,7 +64,10 @@ namespace BloodyRewards.Command
         [Command("remove", shortHand: "crm", usage: "<NumberItem>", description: "Delete a reward", adminOnly: true)]
         public static void RemoveReward(ChatCommandContext ctx, int index)
         {
-
+            if (Plugin.WalletSystem.Value)
+            {
+                throw ctx.Error("BloodyWallet is activated as a reward so this command is disabled.");
+            }
             try
             {
                 if (ShareDB.rewardsList.Count == 1)
