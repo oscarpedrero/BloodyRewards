@@ -1,10 +1,10 @@
 ﻿using Bloody.Core;
-using Bloody.Core.Models;
+using Bloody.Core.Models.v1;
 using ProjectM;
 using BloodyRewards.DB.Models;
 using System.Collections.Generic;
 using System.Linq;
-using Bloody.Core.API;
+using Bloody.Core.API.v1;
 using System;
 
 namespace BloodyRewards.DB

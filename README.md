@@ -2,11 +2,24 @@
 
 Rewards System for VRising
 
+<details>
+<summary>Changelog</summary>
+
+`1.0.3`
+- Bloody.Core dependency removed as dll and added as framework
+
+`1.0.0`
+- First Release
+
+
+</details>
+
 # Requirements
 
-- [BepInExPack](https://v-rising.thunderstore.io/package/BepInEx/BepInExPack_V_Rising/)
-- [BloodStone](https://v-rising.thunderstore.io/package/deca/Bloodstone/)
-- [VampireCommandFramework](https://github.com/decaprime/VampireCommandFramework)
+1. [BepInEx](https://github.com/BepInEx/BepInEx)
+2. [VampireCommandFramework](https://github.com/decaprime/VampireCommandFramework)
+3. [Bloodstone](https://github.com/decaprime/Bloodstone)
+3. [Bloody.Core](https://github.com/oscarpedrero/BloodyCore)
 
 ## Configuration
 

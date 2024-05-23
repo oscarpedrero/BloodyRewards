@@ -3,7 +3,7 @@ using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using Bloodstone.API;
 using Bloody.Core;
-using Bloody.Core.API;
+using Bloody.Core.API.v1;
 using BloodyRewards.DB;
 using BloodyRewards.Systems;
 using HarmonyLib;
@@ -15,13 +15,14 @@ namespace BloodyRewards;
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 [BepInDependency("gg.deca.VampireCommandFramework")]
 [BepInDependency("gg.deca.Bloodstone")]
+[BepInDependency("trodi.Bloody.Core")]
 [BepInDependency("trodi.bloody.Wallet", BepInDependency.DependencyFlags.SoftDependency)]
 public class Plugin : BasePlugin, IRunOnInitialized
 {
 
     Harmony _harmony;
 
-    public static Bloody.Core.Helper.Logger Logger;
+    public static Bloody.Core.Helper.v1.Logger Logger;
     public static SystemsCore SystemsCore;
 
     /// 

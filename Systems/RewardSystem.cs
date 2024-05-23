@@ -6,11 +6,12 @@ using Unity.Collections;
 using Unity.Entities;
 using Bloody.Core;
 using Bloody.Core.Methods;
-using Bloody.Core.Models;
-using Bloody.Core.Helper;
+using Bloody.Core.Models.v1;
+using Bloody.Core.Helper.v1;
 using System.Linq;
 using Stunlock.Core;
 using BloodyWallet.API;
+using Bloody.Core.GameData.v1;
 
 namespace BloodyRewards.Systems
 {
@@ -61,7 +62,7 @@ namespace BloodyRewards.Systems
             if (em.HasComponent<Minion>(died)) return;
 
             var playerCharacterKiller = em.GetComponentData<PlayerCharacter>(killer);
-            var userModelKiller = Core.Users.FromEntity(playerCharacterKiller.UserEntity);
+            var userModelKiller = GameData.Users.FromEntity(playerCharacterKiller.UserEntity);
 
             //Plugin.Logger.LogInfo($"PVE DROP");
 
@@ -99,7 +100,7 @@ namespace BloodyRewards.Systems
             if (em.HasComponent<Minion>(died)) return;
 
             var playerCharacterKiller = em.GetComponentData<PlayerCharacter>(killer);
-            var userModelKiller = Core.Users.FromEntity(playerCharacterKiller.UserEntity);
+            var userModelKiller = GameData.Users.FromEntity(playerCharacterKiller.UserEntity);
 
             var rewards = ShareDB.getRewardList().ToList();
             var random = new Random();
@@ -110,7 +111,7 @@ namespace BloodyRewards.Systems
             //Plugin.Logger.LogInfo($"PVP DROP");
             
             var playerCharacterDied = em.GetComponentData<PlayerCharacter>(died);
-            var userModelDied = Core.Users.FromEntity(playerCharacterKiller.UserEntity);
+            var userModelDied = GameData.Users.FromEntity(playerCharacterKiller.UserEntity);
             var diedLevel = userModelDied.Character.Equipment.Level;
 
             //Plugin.Logger.LogInfo($"User Died Level {diedLevel}");

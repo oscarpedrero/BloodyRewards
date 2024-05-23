@@ -3,7 +3,7 @@ using BloodyRewards.DB;
 using Stunlock.Core;
 using System;
 using System.Collections.Generic;
-using Bloody.Core.API;
+using Bloody.Core.API.v1;
 using VampireCommandFramework;
 
 namespace BloodyRewards.Command
