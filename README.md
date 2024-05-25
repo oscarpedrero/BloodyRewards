@@ -5,7 +5,7 @@ Rewards System for VRising
 <details>
 <summary>Changelog</summary>
 
-`1.0.3`
+`1.0.4`
 - Bug fixes and performance improvements
 
 `1.0.3`
