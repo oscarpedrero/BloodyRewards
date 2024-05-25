@@ -6,6 +6,9 @@ Rewards System for VRising
 <summary>Changelog</summary>
 
 `1.0.3`
+- Bug fixes and performance improvements
+
+`1.0.3`
 - Bloody.Core dependency removed as dll and added as framework
 
 `1.0.0`

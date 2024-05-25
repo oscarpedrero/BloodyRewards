@@ -99,6 +99,7 @@ namespace BloodyRewards.DB
             ConfigDB.DropPvpRewardsMax = Plugin.DropPvpRewardsMax.Value;
             ConfigDB.MaxRewardsPerDayPerPlayerPvp = Plugin.MaxRewardsPerDayPerPlayerPvp.Value;
 
+            Plugin.Logger.LogWarning($"Seteamo WalletSystem como {Plugin.WalletSystem.Value}");
             ConfigDB.WalletSystem = Plugin.WalletSystem.Value;
             ConfigDB.WalletPassword = Plugin.WalletPassword.Value;
             ConfigDB.WalletAmountPveMax = Plugin.WalletAmountPveMax.Value;

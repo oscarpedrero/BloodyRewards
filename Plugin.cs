@@ -84,8 +84,18 @@ public class Plugin : BasePlugin, IRunOnInitialized
     {
         SystemsCore = Core.SystemsCore;
 
-        EventsHandlerSystem.OnDeath += RewardSystem.ServerEvents_OnDeath;
-        EventsHandlerSystem.OnVampireDowned += RewardSystem.ServerEvents_OnVampireDowned;
+        LoadDataFromFiles.SetConfigMod();
+
+        if (ConfigDB.WalletSystem)
+        {
+            EventsHandlerSystem.OnDeath += RewardSystemVirtual.ServerEvents_OnDeath;
+            EventsHandlerSystem.OnVampireDowned += RewardSystemVirtual.ServerEvents_OnVampireDowned;
+        } else
+        {
+            EventsHandlerSystem.OnDeath += RewardSystem.ServerEvents_OnDeath;
+            EventsHandlerSystem.OnVampireDowned += RewardSystem.ServerEvents_OnVampireDowned;
+        }
+        
 
         LoadDataFromFiles.LoadRewardsToDB();
         LoadDataFromFiles.LoadUserRewardsPerDayToDB();
@@ -138,7 +148,7 @@ public class Plugin : BasePlugin, IRunOnInitialized
 
     public void OnGameInitialized()
     {
-        LoadDataFromFiles.SetConfigMod();
+        
     }
 
 }

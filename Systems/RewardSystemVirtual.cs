@@ -4,16 +4,18 @@ using ProjectM;
 using System;
 using Unity.Collections;
 using Unity.Entities;
+using Bloody.Core;
 using Bloody.Core.Methods;
 using Bloody.Core.Models.v1;
 using Bloody.Core.Helper.v1;
 using System.Linq;
 using Stunlock.Core;
+using BloodyWallet.API;
 using Bloody.Core.GameData.v1;
 
 namespace BloodyRewards.Systems
 {
-    public class RewardSystem
+    public class RewardSystemVirtual
     {
         private static EntityManager em = Plugin.SystemsCore.EntityManager;
 
@@ -24,9 +26,9 @@ namespace BloodyRewards.Systems
         public static void ServerEvents_OnDeath(DeathEventListenerSystem sender, NativeArray<DeathEvent> deathEvents)
         {
             if (!ConfigDB.RewardsEnabled) return;
-            if (ConfigDB.WalletSystem) return;
+            if (!ConfigDB.WalletSystem) return;
 
-            foreach (var deathEvent in deathEvents)
+                foreach (var deathEvent in deathEvents)
             {
                 if (em.HasComponent<PlayerCharacter>(deathEvent.Killer) && em.HasComponent<Movement>(deathEvent.Died))
                 {
@@ -119,16 +121,16 @@ namespace BloodyRewards.Systems
             if (probabilityOeneratingReward(percentFinal))
             {
                 var totalRewards = 0;
-                totalRewards = rnd.Next(ConfigDB.DropPvpRewardsMin, ConfigDB.DropPvpRewardsMax);
-
+                totalRewards = rnd.Next(ConfigDB.WalletAmountPVPMin, ConfigDB.WalletAmountPVPMax);
+                
                 if (ConfigDB.searchUserRewardPerDay(userModelKiller.CharacterName, out UserRewardsPerDayModel userRewardsPerDay))
                 {
                     var virtualAmount = userRewardsPerDay.AmountPvp + totalRewards;
                     if (virtualAmount <= ConfigDB.MaxRewardsPerDayPerPlayerPvp)
                     {
                         userRewardsPerDay.AmountPvp = virtualAmount;
-                        userModelKiller.DropItemNearby(prefabRewardGUID, totalRewards);
-
+                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        userModelKiller.SendSystemMessage(message);
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
                         //Plugin.Logger.LogInfo($"Drop PVP {totalRewards} rewards");
@@ -138,7 +140,9 @@ namespace BloodyRewards.Systems
                     {
                         totalRewards = ConfigDB.MaxRewardsPerDayPerPlayerPvp - userRewardsPerDay.AmountPvp;
                         userRewardsPerDay.AmountPvp += totalRewards;
-                        userModelKiller.DropItemNearby(prefabRewardGUID, totalRewards);
+                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        userModelKiller.SendSystemMessage(message);
+                       
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
                         //Plugin.Logger.LogInfo($"Drop PVP {totalRewards} rewards");
@@ -162,7 +166,7 @@ namespace BloodyRewards.Systems
             if (probabilityOeneratingReward(percentFinal))
             {
                 var totalRewards = 0;
-                totalRewards = rnd.Next(ConfigDB.DropdNpcRewardsMin, ConfigDB.DropNpcRewardsMax);
+                totalRewards = rnd.Next(ConfigDB.WalletAmountPveMin, ConfigDB.WalletAmountPveMax);
                 
                 if (ConfigDB.searchUserRewardPerDay(userModelKiller.CharacterName,out UserRewardsPerDayModel userRewardsPerDay))
                 {
@@ -170,10 +174,8 @@ namespace BloodyRewards.Systems
                     if (virtualAmount <= ConfigDB.MaxRewardsPerDayPerPlayerNpc)
                     {
                         userRewardsPerDay.AmountNpc = virtualAmount;
-                        userModelKiller.DropItemNearby(prefabRewardGUID, totalRewards);
-          
-                        
-
+                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        userModelKiller.SendSystemMessage(message);
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
                         //Plugin.Logger.LogInfo($"Drop NPC {totalRewards} rewards");
@@ -182,7 +184,8 @@ namespace BloodyRewards.Systems
                     {
                         totalRewards = ConfigDB.MaxRewardsPerDayPerPlayerNpc - userRewardsPerDay.AmountNpc;
                         userRewardsPerDay.AmountNpc += totalRewards;
-                        userModelKiller.DropItemNearby(prefabRewardGUID, totalRewards);
+                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        userModelKiller.SendSystemMessage(message);
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
                        // Plugin.Logger.LogInfo($"Drop NPC {totalRewards} rewards");
@@ -206,7 +209,8 @@ namespace BloodyRewards.Systems
             if (probabilityOeneratingReward(percentFinal))
             {
                 var totalRewards = 0;
-                totalRewards = rnd.Next(ConfigDB.DropVBloodRewardsMin, ConfigDB.DropVBloodRewardsMax);
+                totalRewards = rnd.Next(ConfigDB.WalletAmountVBloodMin, ConfigDB.WalletAmountVBloodMax);
+               
                 
                 if (ConfigDB.searchUserRewardPerDay(userModelKiller.CharacterName, out UserRewardsPerDayModel userRewardsPerDay))
                 {
@@ -214,7 +218,11 @@ namespace BloodyRewards.Systems
                     if (virtualAmount <= ConfigDB.MaxRewardsPerDayPerPlayerVBlood)
                     {
                         userRewardsPerDay.AmountVBlood = virtualAmount;
-                        userModelKiller.DropItemNearby(prefabRewardGUID, totalRewards);
+
+                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        userModelKiller.SendSystemMessage(message);
+                        
+
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
                         //Plugin.Logger.LogInfo($"Drop NPC {totalRewards} rewards");
@@ -224,7 +232,10 @@ namespace BloodyRewards.Systems
                     {
                         totalRewards = ConfigDB.MaxRewardsPerDayPerPlayerVBlood - userRewardsPerDay.AmountVBlood;
                         userRewardsPerDay.AmountVBlood += totalRewards;
-                        userModelKiller.DropItemNearby(prefabRewardGUID, totalRewards);
+
+                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        userModelKiller.SendSystemMessage(message);
+
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
                         //Plugin.Logger.LogInfo($"Drop NPC {totalRewards} rewards");
