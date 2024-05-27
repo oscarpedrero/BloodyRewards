@@ -1,5 +1,3 @@
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K8ENRQY)
-
 # BloodyRewards
 
 Rewards System for VRising
@@ -19,12 +17,16 @@ Rewards System for VRising
 
 </details>
 
+# Support this project
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K8ENRQY)
+
 # Requirements
 
-1. [BepInEx](https://github.com/BepInEx/BepInEx)
-2. [VampireCommandFramework](https://github.com/decaprime/VampireCommandFramework)
-3. [Bloodstone](https://github.com/decaprime/Bloodstone)
-3. [Bloody.Core](https://github.com/oscarpedrero/BloodyCore)
+1. [BepInEx](https://thunderstore.io/c/v-rising/p/BepInEx/BepInExPack_V_Rising/)
+2. [Bloodstone](https://thunderstore.io/c/v-rising/p/deca/Bloodstone/)
+3. [VampireCommandFramework](https://thunderstore.io/c/v-rising/p/deca/VampireCommandFramework/)
+4. [Bloody.Core](https://thunderstore.io/c/v-rising/p/Trodi/BloodyCore/)
 
 ## Configuration
 
