@@ -8,6 +8,10 @@ Rewards System for VRising
 - Now you can activate rewards that will be awarded once per day through daily login to the server.  Check the configuration file to activate this option.
 - Now you can activate rewards that will be awarded for connection time, the longer people are logged in, the more rewards they will get.  Check the configuration file to activate this option.
 
+## Known bugs
+
+- PVP rewards do not work as they should.
+
 <details>
 <summary>Changelog</summary>
 
