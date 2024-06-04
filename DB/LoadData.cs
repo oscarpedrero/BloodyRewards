@@ -12,6 +12,7 @@ namespace BloodyRewards.DB
 
         public static readonly string ConfigPath = Path.Combine(Paths.ConfigPath, "BloodyRewards");
         public static string RewardListFile = Path.Combine(ConfigPath, "currency_list.json");
+        public static string RewardLDayliistFile = Path.Combine(ConfigPath, "dayli_time_online_list.json");
         public static string UserRewardsPerDayFile = Path.Combine(ConfigPath, "user_currencies_per_day.json");
 
         public static bool loadRewards()
@@ -22,6 +23,22 @@ namespace BloodyRewards.DB
 
                 var rewardsList = JsonSerializer.Deserialize<List<RewardModel>>(json);
                 return ShareDB.setRewardList(rewardsList);
+            }
+            catch (Exception error)
+            {
+                Plugin.Logger.LogError($"Error: {error.Message}");
+                return false;
+            }
+
+        }
+        public static bool loadRewardLDayliistFiles()
+        {
+            try
+            {
+                string json = File.ReadAllText(RewardLDayliistFile);
+
+                var rewardsList = JsonSerializer.Deserialize<List<DayliLoginTimeModel>>(json);
+                return ShareDB.settDayliLoginTimeModel(rewardsList);
             }
             catch (Exception error)
             {
@@ -57,6 +74,8 @@ namespace BloodyRewards.DB
 
 
             if (!File.Exists(UserRewardsPerDayFile)) File.WriteAllText(UserRewardsPerDayFile, "[]");
+
+            if (!File.Exists(RewardLDayliistFile)) File.WriteAllText(RewardLDayliistFile, "[]");
 
         }
 
@@ -99,15 +118,20 @@ namespace BloodyRewards.DB
             ConfigDB.DropPvpRewardsMax = Plugin.DropPvpRewardsMax.Value;
             ConfigDB.MaxRewardsPerDayPerPlayerPvp = Plugin.MaxRewardsPerDayPerPlayerPvp.Value;
 
-            Plugin.Logger.LogWarning($"Seteamo WalletSystem como {Plugin.WalletSystem.Value}");
             ConfigDB.WalletSystem = Plugin.WalletSystem.Value;
-            ConfigDB.WalletPassword = Plugin.WalletPassword.Value;
             ConfigDB.WalletAmountPveMax = Plugin.WalletAmountPveMax.Value;
             ConfigDB.WalletAmountPveMin = Plugin.WalletAmountPveMin.Value;
             ConfigDB.WalletAmountVBloodMax = Plugin.WalletAmountVBloodMax.Value;
             ConfigDB.WalletAmountVBloodMin = Plugin.WalletAmountVBloodMin.Value;
             ConfigDB.WalletAmountPVPMax = Plugin.WalletAmountVBloodMin.Value;
             ConfigDB.WalletAmountPVPMin = Plugin.WalletAmountVBloodMin.Value;
+
+            ConfigDB.DailyLoginRewards = Plugin.DailyLoginRewards.Value;
+            ConfigDB.AmountDailyLoginReward = Plugin.AmountDailyLoginReward.Value;
+
+            ConfigDB.ConnectionTimeReward = Plugin.ConnectionTimeReward.Value;
+            ConfigDB.AmountTimeReward = Plugin.AmountTimeReward.Value;
+            ConfigDB.TimeReward = Plugin.TimeReward.Value;
         }
     }
 }

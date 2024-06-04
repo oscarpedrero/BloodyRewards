@@ -14,9 +14,21 @@ namespace BloodyRewards.DB
 
         public static List<RewardModel> rewardsList = new();
 
+        public static List<DayliLoginTimeModel> ListDayliLoginTimeModel = new();
+
         public static List<RewardModel> getRewardList()
         {
             return rewardsList;
+        }
+
+        public static List<DayliLoginTimeModel> getDayliLoginTimeModel()
+        {
+            return ListDayliLoginTimeModel;
+        }
+
+        public static void addDayliLoginTimeModel(DayliLoginTimeModel dayliLoginTimeModel)
+        {
+            ListDayliLoginTimeModel.Add(dayliLoginTimeModel);
         }
 
         public static RewardModel getReward(int guid)
@@ -33,6 +45,14 @@ namespace BloodyRewards.DB
         {
 
             rewardsList = rewards;
+
+            return true;
+        }
+
+        public static bool settDayliLoginTimeModel(List<DayliLoginTimeModel> rewards)
+        {
+
+            ListDayliLoginTimeModel = rewards;
 
             return true;
         }

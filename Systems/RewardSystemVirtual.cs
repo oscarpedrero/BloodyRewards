@@ -129,7 +129,7 @@ namespace BloodyRewards.Systems
                     if (virtualAmount <= ConfigDB.MaxRewardsPerDayPerPlayerPvp)
                     {
                         userRewardsPerDay.AmountPvp = virtualAmount;
-                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        WalletAPI.AddTokenToUser(totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
                         userModelKiller.SendSystemMessage(message);
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
@@ -140,7 +140,7 @@ namespace BloodyRewards.Systems
                     {
                         totalRewards = ConfigDB.MaxRewardsPerDayPerPlayerPvp - userRewardsPerDay.AmountPvp;
                         userRewardsPerDay.AmountPvp += totalRewards;
-                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        WalletAPI.AddTokenToUser(totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
                         userModelKiller.SendSystemMessage(message);
                        
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
@@ -174,7 +174,7 @@ namespace BloodyRewards.Systems
                     if (virtualAmount <= ConfigDB.MaxRewardsPerDayPerPlayerNpc)
                     {
                         userRewardsPerDay.AmountNpc = virtualAmount;
-                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        WalletAPI.AddTokenToUser(totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
                         userModelKiller.SendSystemMessage(message);
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
@@ -184,7 +184,7 @@ namespace BloodyRewards.Systems
                     {
                         totalRewards = ConfigDB.MaxRewardsPerDayPerPlayerNpc - userRewardsPerDay.AmountNpc;
                         userRewardsPerDay.AmountNpc += totalRewards;
-                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        WalletAPI.AddTokenToUser(totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
                         userModelKiller.SendSystemMessage(message);
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
@@ -219,7 +219,7 @@ namespace BloodyRewards.Systems
                     {
                         userRewardsPerDay.AmountVBlood = virtualAmount;
 
-                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        WalletAPI.AddTokenToUser(totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
                         userModelKiller.SendSystemMessage(message);
                         
 
@@ -233,7 +233,7 @@ namespace BloodyRewards.Systems
                         totalRewards = ConfigDB.MaxRewardsPerDayPerPlayerVBlood - userRewardsPerDay.AmountVBlood;
                         userRewardsPerDay.AmountVBlood += totalRewards;
 
-                        WalletAPI.AddTokenToUser(ConfigDB.WalletPassword, totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
+                        WalletAPI.AddTokenToUser(totalRewards, "BloodyRewards", userModelKiller.Entity, userModelKiller.Entity, out string message);
                         userModelKiller.SendSystemMessage(message);
 
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);

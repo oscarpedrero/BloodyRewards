@@ -2,8 +2,19 @@
 
 Rewards System for VRising
 
+## NEW IN 1.0.5
+
+- You can now earn virtual currency rewards through [BloodyWallet](https://thunderstore.io/c/v-rising/p/Trodi/BloodyWallet/) mod. Check the configuration file to activate this option.
+- Now you can activate rewards that will be awarded once per day through daily login to the server.  Check the configuration file to activate this option.
+- Now you can activate rewards that will be awarded for connection time, the longer people are logged in, the more rewards they will get.  Check the configuration file to activate this option.
+
 <details>
 <summary>Changelog</summary>
+
+`1.0.5`
+- Updated to work with [BloodyWallet](https://thunderstore.io/c/v-rising/p/Trodi/BloodyWallet/)
+- Added daily login reward system
+- Added reward system for connection time
 
 `1.0.4`
 - Bug fixes and performance improvements
@@ -17,7 +28,7 @@ Rewards System for VRising
 
 </details>
 
-# Support this project
+# Sponsor this project
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/K3K8ENRQY)
 
@@ -27,6 +38,7 @@ Rewards System for VRising
 2. [Bloodstone](https://thunderstore.io/c/v-rising/p/deca/Bloodstone/)
 3. [VampireCommandFramework](https://thunderstore.io/c/v-rising/p/deca/VampireCommandFramework/)
 4. [Bloody.Core](https://thunderstore.io/c/v-rising/p/Trodi/BloodyCore/)
+5. [BloodyWallet](https://thunderstore.io/c/v-rising/p/Trodi/BloodyWallet/)
 
 ## Configuration
 
@@ -35,8 +47,37 @@ Once the mod is installed, it's time for configuration:
 For this we will go to the folder that we have defined within BepInEx for the configuration files and there we will find the configuration file of the mod called `BloodyRewards.cfg` that we will explain:
 
 ```
-## Settings file was created by plugin BloodyRewards v0.1.7
+## Settings file was created by plugin BloodyRewards v1.0.5
 ## Plugin GUID: BloodyRewards
+
+[ConnectionTimeReward]
+
+## Connection time reward
+# Setting type: Boolean
+# Default value: true
+ConnectionTimeReward = true
+
+## Amount of rewards for connection time
+# Setting type: Int32
+# Default value: 1
+AmountTimeReward = 1
+
+## Every how many minutes the reward will be awarded
+# Setting type: Int32
+# Default value: 5
+TimeReward = 2
+
+[DayliLoginRewardsSystem]
+
+## Daily reward for connecting to the server
+# Setting type: Boolean
+# Default value: true
+DailyLoginRewards = true
+
+## Amount of rewards for login
+# Setting type: Int32
+# Default value: 15
+AmountDailyLoginReward = 15
 
 [RewardsSystem]
 
@@ -45,10 +86,10 @@ For this we will go to the folder that we have defined within BepInEx for the co
 # Default value: true
 enabled = true
 
-## Percent chance that an NPC will drop the type of reward from the system
+## Percent chance that an NPC will drop the type of reward from the shop
 # Setting type: Int32
 # Default value: 5
-minPercentageDropNpc = 80
+minPercentageDropNpc = 5
 
 ## Percentage increase for every rank of 10 levels of the NPC
 # Setting type: Int32
@@ -70,7 +111,7 @@ DropNpcRewardsMax = 5
 # Default value: 5
 MaxRewardsPerDayPerPlayerNpc = 5
 
-## Percent chance that an VBlood will drop the type of reward from the system
+## Percent chance that an VBlood will drop the type of reward from the shop
 # Setting type: Int32
 # Default value: 20
 minPercentageDropVBlood = 20
@@ -119,6 +160,43 @@ DropPvpRewardsMax = 20
 # Setting type: Int32
 # Default value: 20
 MaxRewardsPerDayPerPlayerPvp = 20
+
+[Wallet]
+
+## Activate rewards in virtual currency through BloodyWallet ( https://github.com/oscarpedrero/BloodyWallet )
+# Setting type: Boolean
+# Default value: false
+enabled = true
+
+## Maximum amount of virtual coins for when you drop in PVE
+# Setting type: Int32
+# Default value: 2
+amountPveMax = 2
+
+## Minumun amount of virtual coins for when you drop in PVE
+# Setting type: Int32
+# Default value: 1
+amountPveMin = 1
+
+## Maximum amount of virtual coins for when you drop in VBlood
+# Setting type: Int32
+# Default value: 2
+amountVBloodMax = 2
+
+## Minimun amount of virtual coins for when you drop in PVE
+# Setting type: Int32
+# Default value: 1
+amountVBloodMin = 1
+
+## Maximum amount of virtual coins for when you drop in PVE
+# Setting type: Int32
+# Default value: 2
+amountPVPMax = 2
+
+## Minimun amount of virtual coins for when you drop in PVE
+# Setting type: Int32
+# Default value: 1
+amountPVPMin = 1
 ```
 
 |SECTION|PARAM| DESCRIPTION                                                     | DEFAULT

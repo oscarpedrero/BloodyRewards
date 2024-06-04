@@ -53,7 +53,6 @@ public class Plugin : BasePlugin, IRunOnInitialized
 
     // WALLET CONFIG
     public static ConfigEntry<bool> WalletSystem;
-    public static ConfigEntry<string> WalletPassword;
     public static ConfigEntry<int> WalletAmountPveMax;
     public static ConfigEntry<int> WalletAmountPveMin;
     public static ConfigEntry<int> WalletAmountVBloodMax;
@@ -61,13 +60,22 @@ public class Plugin : BasePlugin, IRunOnInitialized
     public static ConfigEntry<int> WalletAmountPVPMax;
     public static ConfigEntry<int> WalletAmountPVPMin;
 
+    // DAYLI REWARDS CONFIG
+    public static ConfigEntry<bool> DailyLoginRewards;
+    public static ConfigEntry<int> AmountDailyLoginReward;
+
+    // CONECTION TIME REWARDS CONFIG
+    public static ConfigEntry<bool> ConnectionTimeReward;
+    public static ConfigEntry<int> AmountTimeReward;
+    public static ConfigEntry<int> TimeReward;
+
     public override void Load()
     {
         Logger = new(Log);
         
         // Harmony patching
         _harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
-        _harmony.PatchAll(System.Reflection.Assembly.GetExecutingAssembly());
+        _harmony.PatchAll(typeof(TimerSystem));
 
         // Register all commands in the assembly with VCF
         CommandRegistry.RegisterAll();
@@ -85,6 +93,16 @@ public class Plugin : BasePlugin, IRunOnInitialized
         SystemsCore = Core.SystemsCore;
 
         LoadDataFromFiles.SetConfigMod();
+
+        if (ConfigDB.DailyLoginRewards)
+        {
+            EventsHandlerSystem.OnUserConnected += OnlineRewards.OnlineUser;
+        }
+
+        if (ConfigDB.ConnectionTimeReward)
+        {
+            ConnectionTimeSystemRewards.UserRewardTimne();
+        }
 
         if (ConfigDB.WalletSystem)
         {
@@ -134,9 +152,8 @@ public class Plugin : BasePlugin, IRunOnInitialized
         DropPvpRewardsMax = Config.Bind("RewardsSystem", "DropPvpRewardsMax", 20, "Maximum reward can drop victory in PVP");
         MaxRewardsPerDayPerPlayerPvp = Config.Bind("RewardsSystem", "MaxRewardsPerDayPerPlayerPvp", 20, "Maximum number of reward that a user can get per day by victory in PVP");
 
-        // Wallet CONFIG
+        // WALLET CONFIG
         WalletSystem = Config.Bind("Wallet", "enabled", false, "Activate rewards in virtual currency through BloodyWallet ( https://github.com/oscarpedrero/BloodyWallet )");
-        WalletPassword = Config.Bind("Wallet", "password", "", "BloodyWallet Password (Must match the BloodyWallet configuration password)");
         WalletAmountPveMax = Config.Bind("Wallet", "amountPveMax", 2, "Maximum amount of virtual coins for when you drop in PVE");
         WalletAmountPveMin = Config.Bind("Wallet", "amountPveMin", 1, "Minumun amount of virtual coins for when you drop in PVE");
         WalletAmountVBloodMax = Config.Bind("Wallet", "amountVBloodMax", 2, "Maximum amount of virtual coins for when you drop in VBlood");
@@ -144,6 +161,14 @@ public class Plugin : BasePlugin, IRunOnInitialized
         WalletAmountPVPMax = Config.Bind("Wallet", "amountPVPMax", 2, "Maximum amount of virtual coins for when you drop in PVE");
         WalletAmountPVPMin = Config.Bind("Wallet", "amountPVPMin", 1, "Minimun amount of virtual coins for when you drop in PVE");
 
+        // DAYLI REWARDS CONFIG
+        DailyLoginRewards = Config.Bind("DayliLoginRewardsSystem", "DailyLoginRewards", true, "Daily reward for connecting to the server");
+        AmountDailyLoginReward = Config.Bind("DayliLoginRewardsSystem", "AmountDailyLoginReward", 15, "Amount of rewards for login");
+
+        // CONECTION TIME REWARDS CONFIG
+        ConnectionTimeReward = Config.Bind("ConnectionTimeReward", "ConnectionTimeReward", true, "Connection time reward");
+        AmountTimeReward = Config.Bind("ConnectionTimeReward", "AmountTimeReward", 1, "Amount of rewards for connection time");
+        TimeReward = Config.Bind("ConnectionTimeReward", "TimeReward", 5, "Every how many minutes the reward will be awarded");
     }
 
     public void OnGameInitialized()

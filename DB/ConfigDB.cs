@@ -30,7 +30,11 @@ namespace BloodyRewards.DB
         public static int WalletAmountPVPMax { get; internal set; }
         public static int WalletAmountVBloodMin { get; internal set; }
         public static int WalletAmountVBloodMax { get; internal set; }
-        public static string WalletPassword { get; internal set; }
+        public static bool DailyLoginRewards { get; internal set; }
+        public static int AmountDailyLoginReward { get; internal set; }
+        public static bool ConnectionTimeReward { get; internal set; }
+        public static int AmountTimeReward { get; internal set; }
+        public static int TimeReward { get; internal set; }
 
         public static List<(string name, DateTime date, UserRewardsPerDayModel model)> _normalizedUsersRewardsPerDay = new();
 

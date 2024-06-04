@@ -26,6 +26,24 @@ namespace BloodyRewards.DB
 
         }
 
+        public static bool saveDayliTimeLogin()
+        {
+            try
+            {
+                var rewardList = ShareDB.getDayliLoginTimeModel();
+                var jsonOutPut = JsonSerializer.Serialize(rewardList);
+                File.WriteAllText(LoadDataFromFiles.RewardLDayliistFile, jsonOutPut);
+                
+                return true;
+            }
+            catch (Exception error)
+            {
+                Plugin.Logger.LogError($"Error: {error.Message}");
+                return false;
+            }
+
+        }
+
         public static bool saveUsersRewardsPerDay()
         {
             try
