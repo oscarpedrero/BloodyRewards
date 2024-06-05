@@ -1,23 +1,22 @@
-﻿using Bloody.Core.GameData.v1;
+﻿using Bloody.Core.API.v1;
+using Bloody.Core.GameData.v1;
 using Bloody.Core.Methods;
-using Bloody.Core.Models.v1;
 using BloodyRewards.DB;
 using BloodyRewards.DB.Models;
 using BloodyWallet.API;
-using ProjectM;
 using Stunlock.Core;
-using Stunlock.Network;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine;
 
 namespace BloodyRewards.Systems
 {
-    internal class ConnectionTimeSystemRewards
+    internal class ConnectionTimeSystemRewards : MonoBehaviour
     {
         internal static Action action;
+
+        internal static Coroutine ConnectionCoroutine;
+
         internal static void UserRewardTimne()
         {
 
@@ -54,7 +53,7 @@ namespace BloodyRewards.Systems
                         else
                         {
                             var rewards = ShareDB.getRewardList().ToList();
-                            var random = new Random();
+                            var random = new System.Random();
                             int indexRewards = random.Next(rewards.Count);
 
                             var prefabRewardGUID = new PrefabGUID(rewards[indexRewards].guid);
@@ -66,10 +65,9 @@ namespace BloodyRewards.Systems
 
                 }
                 Plugin.Logger.LogInfo($"Next checking at {ConfigDB.TimeReward * 60}");
-                TimerSystem.RunActionOnceAfterDelay(action, ConfigDB.TimeReward * 60);
             };
             Plugin.Logger.LogInfo($"Next checking at {ConfigDB.TimeReward * 60}");
-            TimerSystem.RunActionOnceAfterDelay(action, ConfigDB.TimeReward * 60);
+            ConnectionCoroutine = CoroutineHandler.StartRepeatingCoroutine(action, ConfigDB.TimeReward * 60);
         }
     }
 }

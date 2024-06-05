@@ -3,12 +3,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>BloodyRewards</AssemblyName>
     <Description>Rewards System for VRising</Description>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RootNamespace>BloodyRewards</RootNamespace>
-    <AssemblyVersion>1.0.5</AssemblyVersion>
-    <FileVersion>1.0.5</FileVersion>
+    <AssemblyVersion>1.0.6</AssemblyVersion>
+    <FileVersion>1.0.6</FileVersion>
   </PropertyGroup>
   <ItemGroup>
 	  <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.691" IncludeAssets="compile" />
@@ -17,7 +17,7 @@
 	  <PackageReference Include="VRising.Unhollowed.Client" Version="1.0.*" />
 	  <PackageReference Include="VRising.VampireCommandFramework" Version="0.9.*" />
 	  <PackageReference Include="VRising.Bloodstone" Version="0.2.*" />
-	  <PackageReference Include="Bloody.Core" Version="1.2.3" />
+	  <PackageReference Include="Bloody.Core" Version="1.2.4" />
 	  <PackageReference Include="Bloody.Wallet" Version="0.1.*" />
   </ItemGroup>
 	

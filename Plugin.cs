@@ -75,7 +75,6 @@ public class Plugin : BasePlugin, IRunOnInitialized
         
         // Harmony patching
         _harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
-        _harmony.PatchAll(typeof(TimerSystem));
 
         // Register all commands in the assembly with VCF
         CommandRegistry.RegisterAll();

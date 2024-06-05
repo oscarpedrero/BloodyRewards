@@ -2,6 +2,10 @@
 
 Rewards System for VRising
 
+## IMPORTANT NOTE
+
+You must have version 1.2.4 of Bloody.Core installed to be able to use version 1.0.6 or higher of this mod
+
 ## NEW IN 1.0.5
 
 - You can now earn virtual currency rewards through [BloodyWallet](https://thunderstore.io/c/v-rising/p/Trodi/BloodyWallet/) mod. Check the configuration file to activate this option.
@@ -14,6 +18,9 @@ Rewards System for VRising
 
 <details>
 <summary>Changelog</summary>
+
+`1.0.6`
+- Updated the timer system through Coroutine that brings the new version of Bloody.Core
 
 `1.0.5`
 - Updated to work with [BloodyWallet](https://thunderstore.io/c/v-rising/p/Trodi/BloodyWallet/)
