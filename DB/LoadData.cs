@@ -36,7 +36,6 @@ namespace BloodyRewards.DB
             try
             {
                 string json = File.ReadAllText(RewardLDayliistFile);
-
                 var rewardsList = JsonSerializer.Deserialize<List<DayliLoginTimeModel>>(json);
                 return ShareDB.settDayliLoginTimeModel(rewardsList);
             }
@@ -90,6 +89,14 @@ namespace BloodyRewards.DB
         public static void LoadUserRewardsPerDayToDB()
         {
             if (!loadUserRewardsPerDay())
+            {
+                Plugin.Logger.LogError($"Error loading loadUserRewardsPerDay");
+            }
+        }
+
+        public static void LoadRewardLDayliistFiles()
+        {
+            if (!loadRewardLDayliistFiles())
             {
                 Plugin.Logger.LogError($"Error loading loadUserRewardsPerDay");
             }

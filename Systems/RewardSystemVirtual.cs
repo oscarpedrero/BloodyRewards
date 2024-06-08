@@ -12,6 +12,7 @@ using System.Linq;
 using Stunlock.Core;
 using BloodyWallet.API;
 using Bloody.Core.GameData.v1;
+using Bloodstone.API;
 
 namespace BloodyRewards.Systems
 {
@@ -25,10 +26,9 @@ namespace BloodyRewards.Systems
 
         public static void ServerEvents_OnDeath(DeathEventListenerSystem sender, NativeArray<DeathEvent> deathEvents)
         {
-            if (!ConfigDB.RewardsEnabled) return;
             if (!ConfigDB.WalletSystem) return;
 
-                foreach (var deathEvent in deathEvents)
+            foreach (var deathEvent in deathEvents)
             {
                 if (em.HasComponent<PlayerCharacter>(deathEvent.Killer) && em.HasComponent<Movement>(deathEvent.Died))
                 {
@@ -43,19 +43,68 @@ namespace BloodyRewards.Systems
 
         public static void ServerEvents_OnVampireDowned(VampireDownedServerEventSystem sender, NativeArray<Entity> vampireDownedEntitys)
         {
-            if (!ConfigDB.RewardsEnabled) return;
+
+            Plugin.Logger.LogInfo("HELOOOOO 1");
+            if (!ConfigDB.WalletSystem) return;
 
             foreach (var entity in vampireDownedEntitys)
             {
-                VampireDownedServerEventSystem.TryFindRootOwner(entity, 1, em, out var Died);
-                Entity Source = em.GetComponentData<VampireDownedBuff>(entity).Source;
-                VampireDownedServerEventSystem.TryFindRootOwner(Source, 1, em, out var Killer);
-
-                if (em.HasComponent<PlayerCharacter>(Killer) && em.HasComponent<PlayerCharacter>(Died) && !Killer.Equals(Died))
-                {
-                    pvpReward(Killer, Died);
-                }
+                Plugin.Logger.LogInfo("HELOOOOO 2");
+                ProcessVampireDowned(entity);
             }
+        }
+
+
+        private static void ProcessVampireDowned(Entity entity)
+        {
+            Plugin.Logger.LogInfo("HELOOOOO 3");
+            if (!VampireDownedServerEventSystem.TryFindRootOwner(entity, 1, VWorld.Server.EntityManager, out var victimEntity))
+            {
+                Plugin.Logger.LogInfo("Couldn't get victim entity");
+                return;
+            }
+
+            var downBuff = entity.Read<VampireDownedBuff>();
+
+            Plugin.Logger.LogInfo("HELOOOOO 4");
+            if (!VampireDownedServerEventSystem.TryFindRootOwner(downBuff.Source, 1, VWorld.Server.EntityManager, out var killerEntity))
+            {
+                Plugin.Logger.LogMessage("Couldn't get victim entity");
+                return;
+            }
+            Plugin.Logger.LogInfo("HELOOOOO 5");
+            var victim = victimEntity.Read<PlayerCharacter>();
+
+            Plugin.Logger.LogMessage($"{victim.Name} is victim");
+            var unitKiller = killerEntity.Has<UnitLevel>();
+            Plugin.Logger.LogInfo("HELOOOOO 6");
+            if (unitKiller)
+            {
+                Plugin.Logger.LogInfo("HELOOOOO 7");
+                Plugin.Logger.LogInfo($"{victim.Name} was killed by a unit. [He is currently not receiving a reward]");
+                return;
+            }
+            Plugin.Logger.LogInfo("HELOOOOO 8");
+            var playerKiller = killerEntity.Has<PlayerCharacter>();
+            Plugin.Logger.LogInfo("HELOOOOO 3");
+            if (!playerKiller)
+            {
+                Plugin.Logger.LogInfo("HELOOOOO 9");
+                Plugin.Logger.LogWarning($"Killer could not be identified for {victim.Name}, if you know how to reproduce this please contact Trodi on discord or report on github");
+                return;
+            }
+            Plugin.Logger.LogInfo("HELOOOOO 10");
+            var killer = killerEntity.Read<PlayerCharacter>();
+
+            if (killer.UserEntity == victim.UserEntity)
+            {
+                Plugin.Logger.LogInfo("HELOOOOO 11");
+                Plugin.Logger.LogInfo($"{victim.Name} killed themselves. [He is currently not receiving a reward]");
+                return;
+            }
+            Plugin.Logger.LogInfo("HELOOOOO 12");
+            pvpReward(killerEntity, victimEntity);
+
         }
 
         private static void pveReward(Entity killer, Entity died)
@@ -75,10 +124,9 @@ namespace BloodyRewards.Systems
            // Plugin.Logger.LogInfo($"NPC Level {diedLevel}");
 
             bool isVBlood;
-            if (em.HasComponent<BloodConsumeSource>(died))
+            if (died.Has<VBloodUnit>())
             {
-                BloodConsumeSource BloodSource = em.GetComponentData<BloodConsumeSource>(died);
-                isVBlood = BloodSource.UnitBloodType.Equals(vBloodType);
+                isVBlood = true;
             }
             else
             {

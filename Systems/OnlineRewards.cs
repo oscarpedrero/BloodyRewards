@@ -1,5 +1,4 @@
 ﻿using Bloody.Core;
-using Bloody.Core.API.v1;
 using Bloody.Core.GameData.v1;
 using Bloody.Core.Methods;
 using Bloody.Core.Models.v1;
@@ -11,10 +10,7 @@ using ProjectM.Network;
 using Stunlock.Core;
 using Stunlock.Network;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Unity.Entities;
 
 namespace BloodyRewards.Systems
@@ -41,6 +37,7 @@ namespace BloodyRewards.Systems
 
             if (!isNewPlayer)
             {
+
                 var DailyModelUser = ShareDB.getDayliLoginTimeModel().Where(x => x.player == userNick).FirstOrDefault();
 
                 if(DailyModelUser != null )

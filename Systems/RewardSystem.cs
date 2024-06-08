@@ -10,6 +10,8 @@ using Bloody.Core.Helper.v1;
 using System.Linq;
 using Stunlock.Core;
 using Bloody.Core.GameData.v1;
+using Bloodstone.API;
+using Bloody.Core;
 
 namespace BloodyRewards.Systems
 {
@@ -23,7 +25,6 @@ namespace BloodyRewards.Systems
 
         public static void ServerEvents_OnDeath(DeathEventListenerSystem sender, NativeArray<DeathEvent> deathEvents)
         {
-            if (!ConfigDB.RewardsEnabled) return;
             if (ConfigDB.WalletSystem) return;
 
             foreach (var deathEvent in deathEvents)
@@ -41,19 +42,61 @@ namespace BloodyRewards.Systems
 
         public static void ServerEvents_OnVampireDowned(VampireDownedServerEventSystem sender, NativeArray<Entity> vampireDownedEntitys)
         {
-            if (!ConfigDB.RewardsEnabled) return;
+            if (ConfigDB.WalletSystem) return;
 
             foreach (var entity in vampireDownedEntitys)
             {
-                VampireDownedServerEventSystem.TryFindRootOwner(entity, 1, em, out var Died);
-                Entity Source = em.GetComponentData<VampireDownedBuff>(entity).Source;
-                VampireDownedServerEventSystem.TryFindRootOwner(Source, 1, em, out var Killer);
-
-                if (em.HasComponent<PlayerCharacter>(Killer) && em.HasComponent<PlayerCharacter>(Died) && !Killer.Equals(Died))
-                {
-                    pvpReward(Killer, Died);
-                }
+                ProcessVampireDowned(entity);
             }
+        }
+
+        private static void ProcessVampireDowned(Entity entity)
+        {
+
+            if (!VampireDownedServerEventSystem.TryFindRootOwner(entity, 1, VWorld.Server.EntityManager, out var victimEntity))
+            {
+                Plugin.Logger.LogMessage("Couldn't get victim entity");
+                return;
+            }
+
+            var downBuff = entity.Read<VampireDownedBuff>();
+
+
+            if (!VampireDownedServerEventSystem.TryFindRootOwner(downBuff.Source, 1, VWorld.Server.EntityManager, out var killerEntity))
+            {
+                Plugin.Logger.LogMessage("Couldn't get victim entity");
+                return;
+            }
+
+            var victim = victimEntity.Read<PlayerCharacter>();
+
+            Plugin.Logger.LogMessage($"{victim.Name} is victim");
+            var unitKiller = killerEntity.Has<UnitLevel>();
+
+            if (unitKiller)
+            {
+                Plugin.Logger.LogInfo($"{victim.Name} was killed by a unit. [He is currently not receiving a reward]");
+                return;
+            }
+
+            var playerKiller = killerEntity.Has<PlayerCharacter>();
+
+            if (!playerKiller)
+            {
+                Plugin.Logger.LogWarning($"Killer could not be identified for {victim.Name}, if you know how to reproduce this please contact Trodi on discord or report on github");
+                return;
+            }
+
+            var killer = killerEntity.Read<PlayerCharacter>();
+
+            if (killer.UserEntity == victim.UserEntity)
+            {
+                Plugin.Logger.LogInfo($"{victim.Name} killed themselves. [He is currently not receiving a reward]");
+                return;
+            }
+
+            pvpReward(killerEntity, victimEntity);
+
         }
 
         private static void pveReward(Entity killer, Entity died)
@@ -63,20 +106,14 @@ namespace BloodyRewards.Systems
             var playerCharacterKiller = em.GetComponentData<PlayerCharacter>(killer);
             var userModelKiller = GameData.Users.FromEntity(playerCharacterKiller.UserEntity);
 
-            //Plugin.Logger.LogInfo($"PVE DROP");
-
             UnitLevel UnitDiedLevel = em.GetComponentData<UnitLevel>(died);
-
 
             var diedLevel = UnitDiedLevel.Level;
 
-           // Plugin.Logger.LogInfo($"NPC Level {diedLevel}");
-
             bool isVBlood;
-            if (em.HasComponent<BloodConsumeSource>(died))
+            if (died.Has<VBloodUnit>())
             {
-                BloodConsumeSource BloodSource = em.GetComponentData<BloodConsumeSource>(died);
-                isVBlood = BloodSource.UnitBloodType.Equals(vBloodType);
+                isVBlood = true;
             }
             else
             {

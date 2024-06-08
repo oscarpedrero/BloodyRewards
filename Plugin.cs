@@ -116,6 +116,7 @@ public class Plugin : BasePlugin, IRunOnInitialized
 
         LoadDataFromFiles.LoadRewardsToDB();
         LoadDataFromFiles.LoadUserRewardsPerDayToDB();
+        LoadDataFromFiles.LoadRewardLDayliistFiles();
     }
 
     public override bool Unload()

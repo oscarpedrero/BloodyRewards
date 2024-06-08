@@ -13,7 +13,6 @@ You must have version 1.2.4 of Bloody.Core installed to be able to use version 1
 - Now you can activate rewards that will be awarded for connection time, the longer people are logged in, the more rewards they will get.  Check the configuration file to activate this option.
 
 ## Known bugs
-
 - PVP rewards do not work as they should.
 
 <details>
@@ -21,6 +20,9 @@ You must have version 1.2.4 of Bloody.Core installed to be able to use version 1
 
 `1.0.6`
 - Updated the timer system through Coroutine that brings the new version of Bloody.Core
+- Fixed PVP reward system
+- Fixed daily server connection reward system
+- Fixed get the NPC reward for Vblood kills
 
 `1.0.5`
 - Updated to work with [BloodyWallet](https://thunderstore.io/c/v-rising/p/Trodi/BloodyWallet/)

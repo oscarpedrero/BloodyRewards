@@ -15,8 +15,6 @@ namespace BloodyRewards.Systems
     {
         internal static Action action;
 
-        internal static Coroutine ConnectionCoroutine;
-
         internal static void UserRewardTimne()
         {
 
@@ -67,7 +65,7 @@ namespace BloodyRewards.Systems
                 Plugin.Logger.LogInfo($"Next checking at {ConfigDB.TimeReward * 60}");
             };
             Plugin.Logger.LogInfo($"Next checking at {ConfigDB.TimeReward * 60}");
-            ConnectionCoroutine = CoroutineHandler.StartRepeatingCoroutine(action, ConfigDB.TimeReward * 60);
+            CoroutineHandler.StartRepeatingCoroutine(action, ConfigDB.TimeReward * 60);
         }
     }
 }
