@@ -10,7 +10,6 @@ using Bloody.Core.Helper.v1;
 using System.Linq;
 using Stunlock.Core;
 using Bloody.Core.GameData.v1;
-using Bloodstone.API;
 using Bloody.Core;
 
 namespace BloodyRewards.Systems
@@ -53,7 +52,7 @@ namespace BloodyRewards.Systems
         private static void ProcessVampireDowned(Entity entity)
         {
 
-            if (!VampireDownedServerEventSystem.TryFindRootOwner(entity, 1, VWorld.Server.EntityManager, out var victimEntity))
+            if (!VampireDownedServerEventSystem.TryFindRootOwner(entity, 1, Plugin.SystemsCore.EntityManager, out var victimEntity))
             {
                 Plugin.Logger.LogMessage("Couldn't get victim entity");
                 return;
@@ -62,7 +61,7 @@ namespace BloodyRewards.Systems
             var downBuff = entity.Read<VampireDownedBuff>();
 
 
-            if (!VampireDownedServerEventSystem.TryFindRootOwner(downBuff.Source, 1, VWorld.Server.EntityManager, out var killerEntity))
+            if (!VampireDownedServerEventSystem.TryFindRootOwner(downBuff.Source, 1, Plugin.SystemsCore.EntityManager, out var killerEntity))
             {
                 Plugin.Logger.LogMessage("Couldn't get victim entity");
                 return;

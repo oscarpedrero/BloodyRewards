@@ -130,8 +130,8 @@ namespace BloodyRewards.DB
             ConfigDB.WalletAmountPveMin = Plugin.WalletAmountPveMin.Value;
             ConfigDB.WalletAmountVBloodMax = Plugin.WalletAmountVBloodMax.Value;
             ConfigDB.WalletAmountVBloodMin = Plugin.WalletAmountVBloodMin.Value;
-            ConfigDB.WalletAmountPVPMax = Plugin.WalletAmountVBloodMin.Value;
-            ConfigDB.WalletAmountPVPMin = Plugin.WalletAmountVBloodMin.Value;
+            ConfigDB.WalletAmountPVPMax = Plugin.WalletAmountPVPMax.Value;
+            ConfigDB.WalletAmountPVPMin = Plugin.WalletAmountPVPMin.Value;
 
             ConfigDB.DailyLoginRewards = Plugin.DailyLoginRewards.Value;
             ConfigDB.AmountDailyLoginReward = Plugin.AmountDailyLoginReward.Value;

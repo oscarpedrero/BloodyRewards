@@ -12,7 +12,6 @@ using System.Linq;
 using Stunlock.Core;
 using BloodyWallet.API;
 using Bloody.Core.GameData.v1;
-using Bloodstone.API;
 
 namespace BloodyRewards.Systems
 {
@@ -44,12 +43,10 @@ namespace BloodyRewards.Systems
         public static void ServerEvents_OnVampireDowned(VampireDownedServerEventSystem sender, NativeArray<Entity> vampireDownedEntitys)
         {
 
-            Plugin.Logger.LogInfo("HELOOOOO 1");
             if (!ConfigDB.WalletSystem) return;
 
             foreach (var entity in vampireDownedEntitys)
             {
-                Plugin.Logger.LogInfo("HELOOOOO 2");
                 ProcessVampireDowned(entity);
             }
         }
@@ -57,8 +54,7 @@ namespace BloodyRewards.Systems
 
         private static void ProcessVampireDowned(Entity entity)
         {
-            Plugin.Logger.LogInfo("HELOOOOO 3");
-            if (!VampireDownedServerEventSystem.TryFindRootOwner(entity, 1, VWorld.Server.EntityManager, out var victimEntity))
+            if (!VampireDownedServerEventSystem.TryFindRootOwner(entity, 1, Plugin.SystemsCore.EntityManager, out var victimEntity))
             {
                 Plugin.Logger.LogInfo("Couldn't get victim entity");
                 return;
@@ -66,43 +62,35 @@ namespace BloodyRewards.Systems
 
             var downBuff = entity.Read<VampireDownedBuff>();
 
-            Plugin.Logger.LogInfo("HELOOOOO 4");
-            if (!VampireDownedServerEventSystem.TryFindRootOwner(downBuff.Source, 1, VWorld.Server.EntityManager, out var killerEntity))
+            if (!VampireDownedServerEventSystem.TryFindRootOwner(downBuff.Source, 1, Plugin.SystemsCore.EntityManager, out var killerEntity))
             {
                 Plugin.Logger.LogMessage("Couldn't get victim entity");
                 return;
             }
-            Plugin.Logger.LogInfo("HELOOOOO 5");
             var victim = victimEntity.Read<PlayerCharacter>();
 
             Plugin.Logger.LogMessage($"{victim.Name} is victim");
             var unitKiller = killerEntity.Has<UnitLevel>();
-            Plugin.Logger.LogInfo("HELOOOOO 6");
             if (unitKiller)
             {
                 Plugin.Logger.LogInfo("HELOOOOO 7");
                 Plugin.Logger.LogInfo($"{victim.Name} was killed by a unit. [He is currently not receiving a reward]");
                 return;
             }
-            Plugin.Logger.LogInfo("HELOOOOO 8");
             var playerKiller = killerEntity.Has<PlayerCharacter>();
-            Plugin.Logger.LogInfo("HELOOOOO 3");
             if (!playerKiller)
             {
                 Plugin.Logger.LogInfo("HELOOOOO 9");
                 Plugin.Logger.LogWarning($"Killer could not be identified for {victim.Name}, if you know how to reproduce this please contact Trodi on discord or report on github");
                 return;
             }
-            Plugin.Logger.LogInfo("HELOOOOO 10");
             var killer = killerEntity.Read<PlayerCharacter>();
 
             if (killer.UserEntity == victim.UserEntity)
             {
-                Plugin.Logger.LogInfo("HELOOOOO 11");
                 Plugin.Logger.LogInfo($"{victim.Name} killed themselves. [He is currently not receiving a reward]");
                 return;
             }
-            Plugin.Logger.LogInfo("HELOOOOO 12");
             pvpReward(killerEntity, victimEntity);
 
         }
@@ -181,7 +169,7 @@ namespace BloodyRewards.Systems
                         userModelKiller.SendSystemMessage(message);
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
-                        //Plugin.Logger.LogInfo($"Drop PVP {totalRewards} rewards");
+                        Plugin.Logger.LogInfo($"Drop PVP {totalRewards} rewards");
                         return;
                     }
                     else if (userRewardsPerDay.AmountNpc < ConfigDB.MaxRewardsPerDayPerPlayerPvp)
@@ -193,7 +181,7 @@ namespace BloodyRewards.Systems
                        
                         ConfigDB.addUserRewardsPerDayToList(userRewardsPerDay);
                         SaveDataToFiles.saveUsersRewardsPerDay();
-                        //Plugin.Logger.LogInfo($"Drop PVP {totalRewards} rewards");
+                        Plugin.Logger.LogInfo($"Drop PVP {totalRewards} rewards");
                         return;
                     }
                 }
