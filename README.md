@@ -18,6 +18,9 @@ You must have version 1.2.4 of Bloody.Core installed to be able to use version 1
 <details>
 <summary>Changelog</summary>
 
+`1.0.7`
+- Fixed all virtual reward system bugs
+
 `1.0.6`
 - Updated the timer system through Coroutine that brings the new version of Bloody.Core
 - Fixed PVP reward system

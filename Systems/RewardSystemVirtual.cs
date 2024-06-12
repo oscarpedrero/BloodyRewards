@@ -139,12 +139,6 @@ namespace BloodyRewards.Systems
             var playerCharacterKiller = em.GetComponentData<PlayerCharacter>(killer);
             var userModelKiller = GameData.Users.FromEntity(playerCharacterKiller.UserEntity);
 
-            var rewards = ShareDB.getRewardList().ToList();
-            var random = new Random();
-            int indexRewards = random.Next(rewards.Count);
-
-            var prefabRewardGUID = new PrefabGUID(rewards[indexRewards].guid);
-
             //Plugin.Logger.LogInfo($"PVP DROP");
             
             var playerCharacterDied = em.GetComponentData<PlayerCharacter>(died);
@@ -192,12 +186,6 @@ namespace BloodyRewards.Systems
 
         private static void rewardForNPC(UserModel userModelKiller, int diedLevel)
         {
-            var rewards = ShareDB.getRewardList().Where(x => x.onlyVBlood == false).ToList();
-            var random = new Random();
-            int indexRewards = random.Next(rewards.Count);
-
-            var prefabRewardGUID = new PrefabGUID(rewards[indexRewards].guid);
-
             var percentFinal = calculateDropPercentage(diedLevel, ConfigDB.DropNpcPercentage, ConfigDB.IncrementPercentageDropEveryTenLevelsNpc);
             if (probabilityOeneratingReward(percentFinal))
             {
@@ -228,19 +216,11 @@ namespace BloodyRewards.Systems
                         return;
                     }
                 }
-                    
-                
             }
         }
 
         private static void rewardForVBlood(UserModel userModelKiller, int diedLevel)
         {
-            var rewards = ShareDB.getRewardList().Where(x => x.onlyVBlood == true ).ToList();
-            var random = new Random();
-            int indexRewards = random.Next(rewards.Count);
-
-            var prefabRewardGUID = new PrefabGUID(rewards[indexRewards].guid);
-
             var percentFinal = calculateDropPercentage(diedLevel, ConfigDB.DropdVBloodPercentage, ConfigDB.IncrementPercentageDropEveryTenLevelsVBlood);
             if (probabilityOeneratingReward(percentFinal))
             {

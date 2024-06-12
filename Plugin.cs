@@ -52,13 +52,13 @@ public class Plugin : BasePlugin, IRunOnInitialized
     public static ConfigEntry<int> MaxRewardsPerDayPerPlayerPvp;
 
     // WALLET CONFIG
-    public static ConfigEntry<bool> WalletSystem;
-    public static ConfigEntry<int> WalletAmountPveMax;
-    public static ConfigEntry<int> WalletAmountPveMin;
-    public static ConfigEntry<int> WalletAmountVBloodMax;
-    public static ConfigEntry<int> WalletAmountVBloodMin;
-    public static ConfigEntry<int> WalletAmountPVPMax;
-    public static ConfigEntry<int> WalletAmountPVPMin;
+    public static ConfigEntry<bool> WalletSystem { get; set; }
+    public static ConfigEntry<int> WalletAmountPveMax { get; set; }
+    public static ConfigEntry<int> WalletAmountPveMin { get; set; }
+    public static ConfigEntry<int> WalletAmountVBloodMax { get; set; }
+    public static ConfigEntry<int> WalletAmountVBloodMin { get; set; }
+    public static ConfigEntry<int> WalletAmountPVPMax { get; set; }
+    public static ConfigEntry<int> WalletAmountPVPMin { get; set; }
 
     // DAYLI REWARDS CONFIG
     public static ConfigEntry<bool> DailyLoginRewards;
@@ -157,7 +157,7 @@ public class Plugin : BasePlugin, IRunOnInitialized
         WalletAmountPveMax = Config.Bind("Wallet", "amountPveMax", 2, "Maximum amount of virtual coins for when you drop in PVE");
         WalletAmountPveMin = Config.Bind("Wallet", "amountPveMin", 1, "Minumun amount of virtual coins for when you drop in PVE");
         WalletAmountVBloodMax = Config.Bind("Wallet", "amountVBloodMax", 2, "Maximum amount of virtual coins for when you drop in VBlood");
-        WalletAmountVBloodMin = Config.Bind("Wallet", "amountVBloodMin", 1, "Minimun amount of virtual coins for when you drop in PVE");
+        WalletAmountVBloodMin = Config.Bind("Wallet", "amountVBloodMin", 1, "Minimun amount of virtual coins for when you drop in VBlood");
         WalletAmountPVPMax = Config.Bind("Wallet", "amountPVPMax", 2, "Maximum amount of virtual coins for when you drop in PVE");
         WalletAmountPVPMin = Config.Bind("Wallet", "amountPVPMin", 1, "Minimun amount of virtual coins for when you drop in PVE");
 
