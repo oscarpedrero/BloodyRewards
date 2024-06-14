@@ -18,6 +18,13 @@ You must have version 1.2.4 of Bloody.Core installed to be able to use version 1
 <details>
 <summary>Changelog</summary>
 
+`1.0.9`
+- Fixed all normal reward system bugs
+- Fixed the error in the virtual reward system that always dropped the item on the ground instead of adding it to the inventory
+
+`1.0.8`
+- Fixed all virtual reward system bugs
+
 `1.0.7`
 - Fixed all virtual reward system bugs
 
