@@ -7,6 +7,7 @@ using Bloody.Core.API.v1;
 using BloodyRewards.DB;
 using BloodyRewards.Systems;
 using HarmonyLib;
+using ProjectM;
 using Unity.Entities;
 using VampireCommandFramework;
 
@@ -51,6 +52,9 @@ public class Plugin : BasePlugin, IRunOnInitialized
     public static ConfigEntry<int> DropPvpRewardsMax;
     public static ConfigEntry<int> MaxRewardsPerDayPerPlayerPvp;
 
+    public static ConfigEntry<int> MaximumDeathsSamePlayer { get; set; }
+    public static ConfigEntry<int> CoolDownDeathsSamePlayer { get; set; }
+
     // WALLET CONFIG
     public static ConfigEntry<bool> WalletSystem { get; set; }
     public static ConfigEntry<int> WalletAmountPveMax { get; set; }
@@ -61,13 +65,13 @@ public class Plugin : BasePlugin, IRunOnInitialized
     public static ConfigEntry<int> WalletAmountPVPMin { get; set; }
 
     // DAYLI REWARDS CONFIG
-    public static ConfigEntry<bool> DailyLoginRewards;
-    public static ConfigEntry<int> AmountDailyLoginReward;
+    public static ConfigEntry<bool> DailyLoginRewards { get; set; }
+    public static ConfigEntry<int> AmountDailyLoginReward { get; set; }
 
     // CONECTION TIME REWARDS CONFIG
-    public static ConfigEntry<bool> ConnectionTimeReward;
-    public static ConfigEntry<int> AmountTimeReward;
-    public static ConfigEntry<int> TimeReward;
+    public static ConfigEntry<bool> ConnectionTimeReward { get; set; }
+    public static ConfigEntry<int> AmountTimeReward { get; set; }
+    public static ConfigEntry<int> TimeReward { get; set; }
 
     public override void Load()
     {
@@ -117,6 +121,7 @@ public class Plugin : BasePlugin, IRunOnInitialized
         LoadDataFromFiles.LoadRewardsToDB();
         LoadDataFromFiles.LoadUserRewardsPerDayToDB();
         LoadDataFromFiles.LoadRewardLDayliistFiles();
+        LoadDataFromFiles.LoadKillersListFiles();
     }
 
     public override bool Unload()
@@ -151,6 +156,8 @@ public class Plugin : BasePlugin, IRunOnInitialized
         DropPvpRewardsMin = Config.Bind("RewardsSystem", "DropPvpRewardsMin", 15, "Minimum reward can drop victory in PVP");
         DropPvpRewardsMax = Config.Bind("RewardsSystem", "DropPvpRewardsMax", 20, "Maximum reward can drop victory in PVP");
         MaxRewardsPerDayPerPlayerPvp = Config.Bind("RewardsSystem", "MaxRewardsPerDayPerPlayerPvp", 20, "Maximum number of reward that a user can get per day by victory in PVP");
+        MaximumDeathsSamePlayer = Config.Bind("RewardsSystem", "MaximumDeathsSamePlayer", 1, "Maximum number of consecutive deaths to the same player that are allowed before executing the cooldown");
+        CoolDownDeathsSamePlayer = Config.Bind("RewardsSystem", "CoolDownDeathsSamePlayer", 30, "Minutes a player must wait to receive a reward for killing the same player again");
 
         // WALLET CONFIG
         WalletSystem = Config.Bind("Wallet", "enabled", false, "Activate rewards in virtual currency through BloodyWallet ( https://github.com/oscarpedrero/BloodyWallet )");

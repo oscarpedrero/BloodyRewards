@@ -6,6 +6,23 @@ Rewards System for VRising
 
 You must have version 1.2.4 of Bloody.Core installed to be able to use version 1.0.6 or higher of this mod
 
+## NEW IN 1.0.10
+
+- Added option for maximum number of deaths in pvp of the same player. This parameter defines how many times you can kill the same player in 24 hours.
+- Added cooldown option that a player will receive when they exceed the established daily death limit for the same player.
+
+```
+## Maximum number of consecutive deaths to the same player that are allowed before executing the cooldown
+# Setting type: Int32
+# Default value: 1
+MaximumDeathsSamePlayer = 3
+
+## Minutes a player must wait to receive a reward for killing the same player again
+# Setting type: Int32
+# Default value: 30
+CoolDownDeathsSamePlayer = 30
+```
+
 ## NEW IN 1.0.5
 
 - You can now earn virtual currency rewards through [BloodyWallet](https://thunderstore.io/c/v-rising/p/Trodi/BloodyWallet/) mod. Check the configuration file to activate this option.
@@ -18,9 +35,13 @@ You must have version 1.2.4 of Bloody.Core installed to be able to use version 1
 <details>
 <summary>Changelog</summary>
 
+`1.0.10`
+- Added option for maximum number of deaths in pvp of the same player. This parameter defines how many times you can kill the same player in 24 hours.
+- Added cooldown option that a player will receive when they exceed the established daily death limit for the same player.
+
 `1.0.9`
 - Fixed all normal reward system bugs
-- Fixed the error in the virtual reward system that always dropped the item on the ground instead of adding it to the inventory
+- Fixed the error in the normal reward system that always dropped the item on the ground instead of adding it to the inventory
 
 `1.0.8`
 - Fixed all virtual reward system bugs
@@ -70,7 +91,7 @@ Once the mod is installed, it's time for configuration:
 For this we will go to the folder that we have defined within BepInEx for the configuration files and there we will find the configuration file of the mod called `BloodyRewards.cfg` that we will explain:
 
 ```
-## Settings file was created by plugin BloodyRewards v1.0.5
+## Settings file was created by plugin BloodyRewards v1.0.9
 ## Plugin GUID: BloodyRewards
 
 [ConnectionTimeReward]
@@ -184,6 +205,16 @@ DropPvpRewardsMax = 20
 # Default value: 20
 MaxRewardsPerDayPerPlayerPvp = 20
 
+## Maximum number of consecutive deaths to the same player that are allowed before executing the cooldown
+# Setting type: Int32
+# Default value: 1
+MaximumDeathsSamePlayer = 3
+
+## Minutes a player must wait to receive a reward for killing the same player again
+# Setting type: Int32
+# Default value: 30
+CoolDownDeathsSamePlayer = 30
+
 [Wallet]
 
 ## Activate rewards in virtual currency through BloodyWallet ( https://github.com/oscarpedrero/BloodyWallet )
@@ -206,7 +237,7 @@ amountPveMin = 1
 # Default value: 2
 amountVBloodMax = 2
 
-## Minimun amount of virtual coins for when you drop in PVE
+## Minimun amount of virtual coins for when you drop in VBlood
 # Setting type: Int32
 # Default value: 1
 amountVBloodMin = 1

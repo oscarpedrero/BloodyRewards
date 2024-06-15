@@ -8,6 +8,24 @@ namespace BloodyRewards.DB
     internal class SaveDataToFiles
     {
 
+        public static bool saveKillerPVPList()
+        {
+            try
+            {
+                var KillerPVPLis = ShareDB.getKillersPVPList();
+                var jsonOutPut = JsonSerializer.Serialize(KillerPVPLis);
+                File.WriteAllText(LoadDataFromFiles.KillerPVPListFile, jsonOutPut);
+                
+                return true;
+            }
+            catch (Exception error)
+            {
+                Plugin.Logger.LogError($"Error: {error.Message}");
+                return false;
+            }
+
+        }
+
         public static bool saveRewardsList()
         {
             try

@@ -12,6 +12,7 @@ namespace BloodyRewards.DB
 
         public static readonly string ConfigPath = Path.Combine(Paths.ConfigPath, "BloodyRewards");
         public static string RewardListFile = Path.Combine(ConfigPath, "currency_list.json");
+        public static string KillerPVPListFile = Path.Combine(ConfigPath, "pvp_kills.json");
         public static string RewardLDayliistFile = Path.Combine(ConfigPath, "dayli_time_online_list.json");
         public static string UserRewardsPerDayFile = Path.Combine(ConfigPath, "user_currencies_per_day.json");
 
@@ -23,6 +24,23 @@ namespace BloodyRewards.DB
 
                 var rewardsList = JsonSerializer.Deserialize<List<RewardModel>>(json);
                 return ShareDB.setRewardList(rewardsList);
+            }
+            catch (Exception error)
+            {
+                Plugin.Logger.LogError($"Error: {error.Message}");
+                return false;
+            }
+
+        }
+
+        public static bool loadKillers()
+        {
+            try
+            {
+                string json = File.ReadAllText(KillerPVPListFile);
+
+                var killersList = JsonSerializer.Deserialize<List<PvpModel>>(json);
+                return ShareDB.setKillerPvpList(killersList);
             }
             catch (Exception error)
             {
@@ -75,6 +93,7 @@ namespace BloodyRewards.DB
             if (!File.Exists(UserRewardsPerDayFile)) File.WriteAllText(UserRewardsPerDayFile, "[]");
 
             if (!File.Exists(RewardLDayliistFile)) File.WriteAllText(RewardLDayliistFile, "[]");
+            if (!File.Exists(KillerPVPListFile)) File.WriteAllText(KillerPVPListFile, "[]");
 
         }
 
@@ -99,6 +118,14 @@ namespace BloodyRewards.DB
             if (!loadRewardLDayliistFiles())
             {
                 Plugin.Logger.LogError($"Error loading loadUserRewardsPerDay");
+            }
+        }
+
+        public static void LoadKillersListFiles()
+        {
+            if (!loadKillers())
+            {
+                Plugin.Logger.LogError($"Error loading loadKillers");
             }
         }
 

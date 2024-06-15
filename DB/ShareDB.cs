@@ -1,7 +1,4 @@
-﻿using Bloody.Core;
-using Bloody.Core.Models.v1;
-using ProjectM;
-using BloodyRewards.DB.Models;
+﻿using BloodyRewards.DB.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Bloody.Core.API.v1;
@@ -16,6 +13,13 @@ namespace BloodyRewards.DB
 
         public static List<DayliLoginTimeModel> ListDayliLoginTimeModel = new();
 
+        public static List<PvpModel> KillersPVP = new();
+
+        public static List<PvpModel> getKillersPVPList()
+        {
+            return KillersPVP;
+        }
+
         public static List<RewardModel> getRewardList()
         {
             return rewardsList;
@@ -24,6 +28,11 @@ namespace BloodyRewards.DB
         public static List<DayliLoginTimeModel> getDayliLoginTimeModel()
         {
             return ListDayliLoginTimeModel;
+        }
+
+        public static void addKillersPVPModel(PvpModel pvpModel)
+        {
+            KillersPVP.Add(pvpModel);
         }
 
         public static void addDayliLoginTimeModel(DayliLoginTimeModel dayliLoginTimeModel)
@@ -45,6 +54,14 @@ namespace BloodyRewards.DB
         {
 
             rewardsList = rewards;
+
+            return true;
+        }
+
+        public static bool setKillerPvpList(List<PvpModel> killers)
+        {
+
+            KillersPVP = killers;
 
             return true;
         }

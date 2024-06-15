@@ -11,6 +11,7 @@ using System.Linq;
 using Stunlock.Core;
 using Bloody.Core.GameData.v1;
 using Bloody.Core;
+using BloodyRewards.Utils;
 
 namespace BloodyRewards.Systems
 {
@@ -45,57 +46,8 @@ namespace BloodyRewards.Systems
 
             foreach (var entity in vampireDownedEntitys)
             {
-                ProcessVampireDowned(entity);
+                Helpers.ProcessVampireDowned(entity);
             }
-        }
-
-        private static void ProcessVampireDowned(Entity entity)
-        {
-
-            if (!VampireDownedServerEventSystem.TryFindRootOwner(entity, 1, Plugin.SystemsCore.EntityManager, out var victimEntity))
-            {
-                Plugin.Logger.LogMessage("Couldn't get victim entity");
-                return;
-            }
-
-            var downBuff = entity.Read<VampireDownedBuff>();
-
-
-            if (!VampireDownedServerEventSystem.TryFindRootOwner(downBuff.Source, 1, Plugin.SystemsCore.EntityManager, out var killerEntity))
-            {
-                Plugin.Logger.LogMessage("Couldn't get victim entity");
-                return;
-            }
-
-            var victim = victimEntity.Read<PlayerCharacter>();
-
-            Plugin.Logger.LogMessage($"{victim.Name} is victim");
-            var unitKiller = killerEntity.Has<UnitLevel>();
-
-            if (unitKiller)
-            {
-                Plugin.Logger.LogInfo($"{victim.Name} was killed by a unit. [He is currently not receiving a reward]");
-                return;
-            }
-
-            var playerKiller = killerEntity.Has<PlayerCharacter>();
-
-            if (!playerKiller)
-            {
-                Plugin.Logger.LogWarning($"Killer could not be identified for {victim.Name}, if you know how to reproduce this please contact Trodi on discord or report on github");
-                return;
-            }
-
-            var killer = killerEntity.Read<PlayerCharacter>();
-
-            if (killer.UserEntity == victim.UserEntity)
-            {
-                Plugin.Logger.LogInfo($"{victim.Name} killed themselves. [He is currently not receiving a reward]");
-                return;
-            }
-
-            pvpReward(killerEntity, victimEntity);
-
         }
 
         private static void pveReward(Entity killer, Entity died)
@@ -129,7 +81,7 @@ namespace BloodyRewards.Systems
 
         }
 
-        private static void pvpReward(Entity killer, Entity died)
+        internal static void pvpReward(Entity killer, Entity died)
         {
 
             if (em.HasComponent<Minion>(died)) return;
