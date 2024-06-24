@@ -7,6 +7,7 @@ using BloodyWallet.API;
 using Stunlock.Core;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using UnityEngine;
 
 namespace BloodyRewards.Systems
@@ -14,6 +15,7 @@ namespace BloodyRewards.Systems
     internal class ConnectionTimeSystemRewards : MonoBehaviour
     {
         internal static Action action;
+        internal static Coroutine TimerCoroutine;
 
         internal static void UserRewardTimne()
         {
@@ -25,47 +27,54 @@ namespace BloodyRewards.Systems
                 var dateTime = DateTime.Now;
                 foreach (var user in users)
                 {
-                    dayliModel = ShareDB.getDayliLoginTimeModel().Where(x => x.player == user.CharacterName).FirstOrDefault();
-
-                    if (dayliModel == null)
+                    try
                     {
-                        dayliModel.player = user.CharacterName;
-                        dayliModel.LastDateTime = dateTime;
-                        dayliModel.LastDayConnection = dateTime.ToString("yyyy/MM/dd");
-                        ShareDB.getDayliLoginTimeModel().Add(dayliModel);
-                        SaveDataToFiles.saveDayliTimeLogin();
-                        continue;
-                    }
+                        dayliModel = ShareDB.getDayliLoginTimeModel().Where(x => x.player == user.CharacterName).FirstOrDefault();
 
-                    var diffInminutes = (dateTime - dayliModel.LastDateTime).TotalMinutes + 1;
-
-                    if (diffInminutes >= ConfigDB.TimeReward)
-                    {
-                        dayliModel.LastDayConnection = dateTime.ToString("yyyy/MM/dd");
-                        dayliModel.LastDateTime = dateTime;
-                        if (ConfigDB.WalletSystem)
+                        if (dayliModel == null)
                         {
-                            WalletAPI.AddTokenToUser(ConfigDB.AmountTimeReward, "BloodyRewards", user.Entity, user.Entity, out string message);
-                            user.SendSystemMessage(message);
-                        }
-                        else
-                        {
-                            var rewards = ShareDB.getRewardList().ToList();
-                            var random = new System.Random();
-                            int indexRewards = random.Next(rewards.Count);
-
-                            var prefabRewardGUID = new PrefabGUID(rewards[indexRewards].guid);
-                            user.DropItemNearby(prefabRewardGUID, ConfigDB.AmountTimeReward);
+                            dayliModel.player = user.CharacterName;
+                            dayliModel.LastDateTime = dateTime;
+                            dayliModel.LastDayConnection = dateTime.ToString("yyyy/MM/dd");
+                            ShareDB.getDayliLoginTimeModel().Add(dayliModel);
+                            SaveDataToFiles.saveDayliTimeLogin();
+                            continue;
                         }
 
-                        SaveDataToFiles.saveDayliTimeLogin();
+                        var diffInminutes = (dateTime - dayliModel.LastDateTime).TotalMinutes + 1;
+
+                        if (diffInminutes >= ConfigDB.TimeReward)
+                        {
+                            dayliModel.LastDayConnection = dateTime.ToString("yyyy/MM/dd");
+                            dayliModel.LastDateTime = dateTime;
+                            if (ConfigDB.WalletSystem)
+                            {
+                                WalletAPI.AddTokenToUser(ConfigDB.AmountTimeReward, "BloodyRewards", user.Entity, user.Entity, out string message);
+                                user.SendSystemMessage(message);
+                            }
+                            else
+                            {
+                                var rewards = ShareDB.getRewardList().ToList();
+                                var random = new System.Random();
+                                int indexRewards = random.Next(rewards.Count);
+
+                                var prefabRewardGUID = new PrefabGUID(rewards[indexRewards].guid);
+                                user.DropItemNearby(prefabRewardGUID, ConfigDB.AmountTimeReward);
+                            }
+
+                            SaveDataToFiles.saveDayliTimeLogin();
+                        } 
+                    
+                    } catch (Exception ex)
+                    {
+                        Plugin.Logger.LogError($"Error generating connection reward for user {user.CharacterName}: {ex.Message}");
                     }
 
                 }
                 Plugin.Logger.LogInfo($"Next checking at {ConfigDB.TimeReward * 60}");
             };
             Plugin.Logger.LogInfo($"Next checking at {ConfigDB.TimeReward * 60}");
-            CoroutineHandler.StartRepeatingCoroutine(action, ConfigDB.TimeReward * 60);
+            TimerCoroutine = CoroutineHandler.StartRepeatingCoroutine(action, ConfigDB.TimeReward * 60);
         }
     }
 }

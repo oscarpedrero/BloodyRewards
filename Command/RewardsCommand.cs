@@ -5,6 +5,10 @@ using System;
 using System.Collections.Generic;
 using Bloody.Core.API.v1;
 using VampireCommandFramework;
+using BloodyRewards.Systems;
+using UnityEngine;
+using System.Collections;
+using static ProjectM.RandomizedSpawnChainSettingsAuthoring;
 
 namespace BloodyRewards.Command
 {
@@ -13,6 +17,8 @@ namespace BloodyRewards.Command
     {
         public static RewardModel reward { get; private set; }
         public static List<RewardModel> rewards { get; private set; }
+
+        public static bool forceRestartTimerConnection = false;
 
         [Command("add", usage: "\"<Name>\" <PrefabGuid> <OnlyForVBlood true/false>", description: "Add a reward. To know the PrefabGuid of an item you must look for the item in the following URL <#4acc45><u>https://gaming.tools/v-rising/items</u></color>", adminOnly: true)]
         public static void AddReward(ChatCommandContext ctx, string name, int item, bool onlyVBlood)
@@ -88,6 +94,35 @@ namespace BloodyRewards.Command
 
                 ctx.Reply(FontColorChatSystem.Yellow($"Reward {FontColorChatSystem.White($"{currecyModel.name}")} removed successful."));
 
+            }
+            catch (Exception error)
+            {
+                Plugin.Logger.LogError($"Error: {error.Message}");
+                throw ctx.Error($"Error: {error.Message}");
+            }
+
+        }
+
+        [Command("force start connection timer", shortHand: "", usage: "", description: "Start the connection time rewards timer", adminOnly: true)]
+        public static void RestartReward(ChatCommandContext ctx)
+        {
+            
+            try
+            {
+                if(forceRestartTimerConnection)
+                {
+                    ConnectionTimeSystemRewards.UserRewardTimne();
+                    forceRestartTimerConnection = false;
+                    ctx.Reply(FontColorChatSystem.White($"Successfully started connection time reward system."));
+                } else
+                {
+                    forceRestartTimerConnection = true;
+                    ctx.Reply(FontColorChatSystem.Red($"You are going to force a restart of the connection time reward system." +
+                        $" If it was not stopped before, this could cause a double reward for connection time. To continue, run the command " +
+                        FontColorChatSystem.Yellow("'.brw force start connection timer' again.")));
+                }
+                
+                
             }
             catch (Exception error)
             {

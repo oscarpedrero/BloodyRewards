@@ -35,6 +35,10 @@ CoolDownDeathsSamePlayer = 30
 <details>
 <summary>Changelog</summary>
 
+`1.0.11`
+- Added a control so that if the timer fails when giving the reward to a player, the Timer does not stop.
+- Add command `.brew force start connection timer`
+
 `1.0.10`
 - Added option for maximum number of deaths in pvp of the same player. This parameter defines how many times you can kill the same player in 24 hours.
 - Added cooldown option that a player will receive when they exceed the established daily death limit for the same player.
@@ -344,6 +348,7 @@ There are currently four commands for admins:
 | `.brw add "<NameOfReward" <PrefabGUID> <OnlyForVBlood (true/false)>`   | Command to add an reward. To get the PrefabGUID you must visit [Complete list of prefabs](https://discord.com/channels/978094827830915092/1117273637024714862/1117273642817044571) and get the PrefabGUID Value as shown in the image below. The last parameter is used to indicate to the drop system if you want to activate this reward so that it drops when killing an NPC Example: .brw add "Silver Coin" -949672483 true 
 | `.brw list` | Command to get the list of rewards.
 | `.brw remove <NumberItem>` | Command to remove an reward.
+| `.brw force start connection timer` | Start the connection time rewards timer. If it was not stopped before, this could cause a double reward for connection time.
 
 # Credits
 
