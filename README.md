@@ -2,7 +2,7 @@
 
 Rewards System for VRising
 
-
+## [BepInEx 1.733.2 (RC2)](https://github.com/decaprime/VRising-Modding/releases/tag/1.733.2)
 
 ## IMPORTANT NOTE
 
@@ -39,6 +39,7 @@ CoolDownDeathsSamePlayer = 30
 
 `2.0.0`
 - Updated to Oakveil
+- Removed Bloodstone dependency
 
 `1.0.11`
 - Added a control so that if the timer fails when giving the reward to a player, the Timer does not stop.
@@ -87,11 +88,10 @@ CoolDownDeathsSamePlayer = 30
 
 # Requirements
 
-1. [BepInEx](https://thunderstore.io/c/v-rising/p/BepInEx/BepInExPack_V_Rising/)
-2. [Bloodstone](https://thunderstore.io/c/v-rising/p/deca/Bloodstone/)
-3. [VampireCommandFramework](https://thunderstore.io/c/v-rising/p/deca/VampireCommandFramework/)
-4. [Bloody.Core](https://thunderstore.io/c/v-rising/p/Trodi/BloodyCore/)
-5. [BloodyWallet](https://thunderstore.io/c/v-rising/p/Trodi/BloodyWallet/)
+1. [BepInEx 1.733.2 (RC2)](https://github.com/decaprime/VRising-Modding/releases/tag/1.733.2)
+2. [VampireCommandFramework](https://thunderstore.io/c/v-rising/p/deca/VampireCommandFramework/)
+3. [Bloody.Core](https://thunderstore.io/c/v-rising/p/Trodi/BloodyCore/)
+4. [BloodyWallet](https://thunderstore.io/c/v-rising/p/Trodi/BloodyWallet/)
 
 ## Configuration
 
@@ -361,7 +361,7 @@ There are currently four commands for admins:
 
 @Godwin for all the ideas you have brought to the project.
 
-[@Deca](https://github.com/decaprime) for your help and the wonderful framework [VampireCommandFramework](https://github.com/decaprime/VampireCommandFramework) and [BloodStone](https://github.com/decaprime/Bloodstone) based in [WetStone](https://github.com/molenzwiebel/Wetstone) by [@Molenzwiebel](https://github.com/molenzwiebel)
+[@Deca](https://github.com/decaprime) for your help and the wonderful framework [VampireCommandFramework](https://github.com/decaprime/VampireCommandFramework)
 
 [@Adain](https://github.com/adainrivers) for encouraging me to develop a UI to be able to use the mod from the client, for the support and for its [VRising.GameData](https://github.com/adainrivers/VRising.GameData) framework
 
