@@ -2,9 +2,11 @@
 
 Rewards System for VRising
 
+
+
 ## IMPORTANT NOTE
 
-You must have version 1.2.4 of Bloody.Core installed to be able to use version 1.0.6 or higher of this mod
+You must have version 2.0.0 of Bloody.Core installed to be able to use version 2.0.0 or higher of this mod
 
 ## NEW IN 1.0.10
 
@@ -34,6 +36,9 @@ CoolDownDeathsSamePlayer = 30
 
 <details>
 <summary>Changelog</summary>
+
+`2.0.0`
+- Updated to Oakveil
 
 `1.0.11`
 - Added a control so that if the timer fails when giving the reward to a player, the Timer does not stop.
