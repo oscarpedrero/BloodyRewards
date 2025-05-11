@@ -13,7 +13,7 @@ containsNsfwContent = false
 BepInEx-BepInExPack_V_Rising = "1.691.3"
 deca-VampireCommandFramework = "0.9.0"
 Trodi-BloodyCore = "2.0.0"
-Trodi-BloodyWallet = "1.0.*"
+Trodi-BloodyWallet = "1.0.0"
 
 [build]
 icon = "./icon.png"
